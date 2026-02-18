@@ -1,9 +1,11 @@
 import { procedures } from "./procedures.js";
 
 let currentProcedure = procedures[0];
-let currentMode = "ep";
+let currentMode = "ep";          // "ep" or "nwc"
+let trainingMode = "normal";     // "normal" or "hard"
 let firstLetterMode = false;
 let caseSensitive = false;
+let hardIndex = 0;
 
 const BASE_HEIGHT_PX = 28;
 
@@ -53,20 +55,32 @@ function progressiveHint(userText, correctText) {
 }
 
 /* ===============================
-   RESIZE (SIMPLE + STABLE)
+   RESIZE (FIXES NWC HEIGHT)
 ================================= */
 
-function resizeBox(el) {
+function resizeBox(el, correctText = null) {
   if (!el) return;
 
   el.style.height = "0px";
 
   requestAnimationFrame(() => {
+
+    // First Letter mode → size from full correct answer
+    if (firstLetterMode && correctText) {
+      const original = el.value;
+      el.value = correctText;
+      el.style.height = el.scrollHeight + "px";
+      el.value = original;
+      return;
+    }
+
+    // Normal sizing
     if (!el.value.trim()) {
       el.style.height = BASE_HEIGHT_PX + "px";
     } else {
       el.style.height = el.scrollHeight + "px";
     }
+
   });
 }
 
@@ -194,8 +208,12 @@ function render() {
 
       ta.addEventListener("input", () => {
         ghost.textContent = progressiveHint(ta.value, correctText);
-        resizeBox(ta);
+        resizeBox(ta, correctText);
       });
+
+      resizeBox(ta, correctText);
+    } else {
+      resizeBox(ta);
     }
 
     ta.addEventListener("input", () => resizeBox(ta));
@@ -209,25 +227,119 @@ function render() {
 
     gradedIdx++;
   }
+
+  updateCounter();
+}
+
+/* ===============================
+   CHECK / RESET / ALL
+================================= */
+
+function check() {
+  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
+  const queue = buildQueue(currentProcedure);
+  const gradedItems = queue.filter(q => q.graded);
+
+  inputs.forEach((input, i) => {
+    const user = normalize(input.value);
+    const correct = normalize(gradedItems[i]?.text ?? "");
+
+    if (user === correct) {
+      input.classList.add("correct");
+      input.classList.remove("incorrect");
+    } else {
+      input.classList.add("incorrect");
+      input.classList.remove("correct");
+    }
+  });
+}
+
+function reset() {
+  render();
+}
+
+function showAllAnswers() {
+  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
+  const queue = buildQueue(currentProcedure);
+  const gradedItems = queue.filter(q => q.graded);
+
+  inputs.forEach((input, i) => {
+    input.value = gradedItems[i]?.text ?? "";
+    input.classList.add("correct");
+
+    const ghost = input.parentElement.querySelector(".ghost");
+    if (ghost) ghost.textContent = "";
+
+    resizeBox(input);
+  });
+}
+
+/* ===============================
+   PAGINATION
+================================= */
+
+function updateCounter() {
+  const counter = document.getElementById("epCounter");
+  if (!counter) return;
+
+  const index = procedures.indexOf(currentProcedure);
+  counter.textContent = `${index + 1} of ${procedures.length}`;
+}
+
+function prevEp() {
+  const index = procedures.indexOf(currentProcedure);
+  if (index > 0) {
+    currentProcedure = procedures[index - 1];
+    render();
+  }
+}
+
+function nextEp() {
+  const index = procedures.indexOf(currentProcedure);
+  if (index < procedures.length - 1) {
+    currentProcedure = procedures[index + 1];
+    render();
+  }
+}
+
+function randomEp() {
+  currentProcedure = procedures[Math.floor(Math.random() * procedures.length)];
+  render();
 }
 
 /* ===============================
    EVENTS
 ================================= */
 
-document.getElementById("firstLetterToggle")?.addEventListener("change", (e) => {
-  firstLetterMode = e.target.checked;
-  render();
-});
+function bind() {
 
-document.getElementById("nwcMode")?.addEventListener("click", () => {
-  currentMode = "nwc";
-  render();
-});
+  document.getElementById("epMode")?.addEventListener("click", () => {
+    currentMode = "ep";
+    render();
+  });
 
-document.getElementById("epMode")?.addEventListener("click", () => {
-  currentMode = "ep";
-  render();
-});
+  document.getElementById("nwcMode")?.addEventListener("click", () => {
+    currentMode = "nwc";
+    render();
+  });
 
+  document.getElementById("firstLetterToggle")?.addEventListener("change", (e) => {
+    firstLetterMode = e.target.checked;
+    render();
+  });
+
+  document.getElementById("caseToggle")?.addEventListener("change", (e) => {
+    caseSensitive = e.target.checked;
+  });
+
+  document.getElementById("checkBtn")?.addEventListener("click", check);
+  document.getElementById("allBtn")?.addEventListener("click", showAllAnswers);
+  document.getElementById("resetBtn")?.addEventListener("click", reset);
+
+  document.getElementById("prevEpBtn")?.addEventListener("click", prevEp);
+  document.getElementById("nextEpBtn")?.addEventListener("click", nextEp);
+  document.getElementById("randomEpBtn")?.addEventListener("click", randomEp);
+}
+
+bind();
 render();
