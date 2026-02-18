@@ -1,0 +1,9 @@
+{
+  "name": "T-6B EP Trainer",
+  "short_name": "EP Trainer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#111111",
+  "icons": []
+}
