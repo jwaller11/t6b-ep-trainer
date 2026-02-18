@@ -1,8 +1,8 @@
 import { procedures } from "./procedures.js";
 
 let currentProcedure = procedures[0];
-let currentMode = "ep";              // "ep" or "nwc"
-let trainingMode = "normal";         // "normal" or "hard"
+let currentMode = "ep";
+let trainingMode = "normal";
 let firstLetterMode = false;
 let caseSensitive = false;
 let hardIndex = 0;
@@ -10,7 +10,7 @@ let hardIndex = 0;
 const BASE_HEIGHT_PX = 28;
 
 /* ===============================
-   TEXT NORMALIZATION
+   NORMALIZE
 ================================= */
 function normalize(text) {
   let cleaned = (text ?? "").replace(/\s+/g, " ").trim();
@@ -19,43 +19,34 @@ function normalize(text) {
 }
 
 /* ===============================
-   RESIZE
+   RESIZE (FIXED FOR NWC)
 ================================= */
 function resizeBox(el, correctText = null) {
   if (!el) return;
 
-  const hasText = (el.value ?? "").trim().length > 0;
-
-  // Reset first
   el.style.height = "0px";
 
   requestAnimationFrame(() => {
 
-    // Normal mode → size from user text
-    if (!firstLetterMode || !correctText) {
-      if (!hasText) {
-        el.style.height = `${BASE_HEIGHT_PX}px`;
-        return;
-      }
+    // In first-letter mode, size using full correct answer
+    if (firstLetterMode && correctText) {
+      const original = el.value;
+      el.value = correctText;
       el.style.height = el.scrollHeight + "px";
-      return;
+      el.value = original;
+    } else {
+      if (!el.value.trim()) {
+        el.style.height = BASE_HEIGHT_PX + "px";
+      } else {
+        el.style.height = el.scrollHeight + "px";
+      }
     }
-
-    // First Letter mode → temporarily measure full correct answer
-    const temp = el.value;
-    el.value = correctText;
-    el.style.height = el.scrollHeight + "px";
-    el.value = temp;
 
   });
 }
 
-function resizeAllBoxes() {
-  document.querySelectorAll(".input-wrap textarea").forEach(resizeBox);
-}
-
 /* ===============================
-   FIRST LETTER (GHOST OVERLAY)
+   FIRST LETTER GHOST
 ================================= */
 function baseHintString(text) {
   let out = "";
@@ -76,80 +67,32 @@ function baseHintString(text) {
   return out;
 }
 
-// Ghost disappears ONLY where user typed the correct char at that same index.
-// Does NOT alter user input.
 function progressiveHint(userText, correctText) {
   const base = baseHintString(correctText);
 
-  const u = userText ?? "";
-  const c = correctText ?? "";
-
-  // compare with/without case sensitivity, but preserve base chars
-  const uCmp = caseSensitive ? u : u.toLowerCase();
-  const cCmp = caseSensitive ? c : c.toLowerCase();
+  const u = caseSensitive ? userText : userText.toLowerCase();
+  const c = caseSensitive ? correctText : correctText.toLowerCase();
 
   let result = "";
-  for (let i = 0; i < c.length; i++) {
-    const userHasChar = i < uCmp.length;
-    if (userHasChar && uCmp[i] === cCmp[i]) result += " ";
+  for (let i = 0; i < correctText.length; i++) {
+    if (i < u.length && u[i] === c[i]) result += " ";
     else result += base[i];
   }
   return result;
 }
 
-function forceCaretToEnd(ta) {
-  const n = (ta.value ?? "").length;
-  ta.setSelectionRange(n, n);
-}
-
 function attachFirstLetterHandlers(ta, ghostEl, correctText) {
-  const updateGhost = () => {
-    ghostEl.textContent = progressiveHint(ta.value, correctText);
-    // keep overlay height in sync with auto-resize
-    ghostEl.style.height = ta.offsetHeight + "px";
-  };
 
-  // Keep caret at end (so “first-letter mode” feels like forward entry),
-  // but DO NOT block or modify typing.
-  ta.addEventListener("focus", () => {
-    requestAnimationFrame(() => forceCaretToEnd(ta));
-  });
-
-  ta.addEventListener("mouseup", () => {
-    requestAnimationFrame(() => forceCaretToEnd(ta));
-  });
-
-  ta.addEventListener("keydown", (e) => {
-    if (!firstLetterMode) return;
-
-    // Allow Tab navigation
-    if (e.key === "Tab") return;
-
-    // If user tries to move cursor, snap back on next frame
-    if (
-      e.key === "ArrowLeft" || e.key === "ArrowRight" ||
-      e.key === "ArrowUp" || e.key === "ArrowDown" ||
-      e.key === "Home" || e.key === "End"
-    ) {
-      requestAnimationFrame(() => forceCaretToEnd(ta));
-    }
-  });
-
-  // On any input change, update ghost + resize. Never clamp/trim value.
-  ta.addEventListener("input", () => {
-    if (!firstLetterMode) return;
-    resizeBox(ta);
-    updateGhost();
-    requestAnimationFrame(() => forceCaretToEnd(ta));
-  });
-
-  // Initialize
   ghostEl.textContent = baseHintString(correctText);
-  updateGhost();
+
+  ta.addEventListener("input", () => {
+    ghostEl.textContent = progressiveHint(ta.value, correctText);
+    resizeBox(ta, correctText);
+  });
 }
 
 /* ===============================
-   QUEUE BUILDING
+   QUEUE BUILDER
 ================================= */
 function buildQueue(proc) {
   const queue = [];
@@ -173,6 +116,7 @@ function buildQueue(proc) {
   };
 
   for (const step of proc.steps) {
+
     if (step.type === "condition") {
       pushCondition(step.text);
       continue;
@@ -197,9 +141,8 @@ function buildQueue(proc) {
    RENDER
 ================================= */
 function render() {
-  const container = document.getElementById("content");
-  if (!container) return;
 
+  const container = document.getElementById("content");
   container.innerHTML = "";
 
   const title = document.createElement("h2");
@@ -214,6 +157,7 @@ function render() {
   let subLetter = 0;
 
   for (const item of queue) {
+
     if (item.kind === "condition") {
       const cond = document.createElement("div");
       cond.className = "condition-label";
@@ -249,8 +193,6 @@ function render() {
       subLetter++;
     } else if (item.label) {
       label.textContent = item.label;
-    } else {
-      label.textContent = "";
     }
 
     const wrap = document.createElement("div");
@@ -270,8 +212,10 @@ function render() {
 
     if (firstLetterMode) {
       attachFirstLetterHandlers(ta, ghost, correctText);
+      resizeBox(ta, correctText);
     } else {
       ghost.textContent = "";
+      resizeBox(ta);
     }
 
     wrap.appendChild(ghost);
@@ -285,7 +229,6 @@ function render() {
   }
 
   updateCounter();
-  resizeAllBoxes();
 }
 
 /* ===============================
@@ -303,11 +246,6 @@ function check() {
     if (user === correct) {
       input.classList.add("correct");
       input.classList.remove("incorrect");
-
-      if (trainingMode === "hard" && i === hardIndex) {
-        hardIndex = Math.min(hardIndex + 1, gradedItems.length - 1);
-        render();
-      }
     } else {
       input.classList.add("incorrect");
       input.classList.remove("correct");
@@ -321,8 +259,6 @@ function reset() {
 }
 
 function showAllAnswers() {
-  if (trainingMode === "hard") return;
-
   const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
   const queue = buildQueue(currentProcedure);
   const gradedItems = queue.filter(q => q.graded);
@@ -345,16 +281,10 @@ function showHint() {
   const queue = buildQueue(currentProcedure);
   const gradedItems = queue.filter(q => q.graded);
 
-  const idx = Math.min(hardIndex, gradedItems.length - 1);
-  const input = document.querySelectorAll(".input-wrap textarea")[idx];
+  const input = document.querySelector(".input-wrap textarea");
   if (!input) return;
 
-  if (firstLetterMode) {
-    const ghost = input.parentElement.querySelector(".ghost");
-    if (ghost) ghost.textContent = baseHintString(gradedItems[idx].text);
-  } else {
-    input.placeholder = baseHintString(gradedItems[idx].text);
-  }
+  input.placeholder = baseHintString(gradedItems[0].text);
 }
 
 /* ===============================
@@ -362,8 +292,6 @@ function showHint() {
 ================================= */
 function updateCounter() {
   const counter = document.getElementById("epCounter");
-  if (!counter) return;
-
   const index = procedures.indexOf(currentProcedure);
   counter.textContent = `${index + 1} of ${procedures.length}`;
 }
@@ -372,7 +300,6 @@ function prevEp() {
   const index = procedures.indexOf(currentProcedure);
   if (index > 0) {
     currentProcedure = procedures[index - 1];
-    hardIndex = 0;
     render();
   }
 }
@@ -381,38 +308,33 @@ function nextEp() {
   const index = procedures.indexOf(currentProcedure);
   if (index < procedures.length - 1) {
     currentProcedure = procedures[index + 1];
-    hardIndex = 0;
     render();
   }
 }
 
 function randomEp() {
-  const randomIndex = Math.floor(Math.random() * procedures.length);
-  currentProcedure = procedures[randomIndex];
-  hardIndex = 0;
+  currentProcedure = procedures[Math.floor(Math.random() * procedures.length)];
   render();
 }
 
 /* ===============================
-   EVENT BINDINGS
+   EVENTS
 ================================= */
 function bind() {
+
   document.getElementById("epMode")?.addEventListener("click", () => {
     currentMode = "ep";
-    hardIndex = 0;
     render();
   });
 
   document.getElementById("nwcMode")?.addEventListener("click", () => {
     currentMode = "nwc";
-    hardIndex = 0;
     render();
   });
 
   document.querySelectorAll("input[name='mode']").forEach(radio => {
     radio.addEventListener("change", (e) => {
       trainingMode = e.target.value;
-      hardIndex = 0;
       render();
     });
   });
@@ -424,8 +346,6 @@ function bind() {
 
   document.getElementById("caseToggle")?.addEventListener("change", (e) => {
     caseSensitive = e.target.checked;
-    // update ghost comparisons immediately
-    if (firstLetterMode) render();
   });
 
   document.getElementById("checkBtn")?.addEventListener("click", check);
@@ -440,4 +360,3 @@ function bind() {
 
 bind();
 render();
-
