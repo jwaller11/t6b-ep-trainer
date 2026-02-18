@@ -5,9 +5,8 @@ let currentMode = "ep";              // "ep" or "nwc"
 let trainingMode = "normal";         // "normal" or "hard"
 let firstLetterMode = false;
 let caseSensitive = false;
-let hardIndex = 0;                   // for hard mode gating
+let hardIndex = 0;
 
-// UI sizing constants (match CSS)
 const BASE_HEIGHT_PX = 28;
 
 /* ===============================
@@ -20,20 +19,15 @@ function normalize(text) {
 }
 
 /* ===============================
-   RESIZE (DETERMINISTIC)
-   - Empty => base height
-   - Non-empty => fit scrollHeight
-   - Uses rAF so scrollHeight is correct after layout
+   RESIZE
 ================================= */
 function resizeBox(el) {
   if (!el) return;
-  const hasText = (el.value ?? "").trim().length > 0;
 
-  // Reset to allow shrink, but keep deterministic base when empty
+  const hasText = (el.value ?? "").trim().length > 0;
   el.style.height = hasText ? "0px" : `${BASE_HEIGHT_PX}px`;
 
   requestAnimationFrame(() => {
-    if (!el) return;
     const stillHasText = (el.value ?? "").trim().length > 0;
     if (!stillHasText) {
       el.style.height = `${BASE_HEIGHT_PX}px`;
@@ -48,7 +42,7 @@ function resizeAllBoxes() {
 }
 
 /* ===============================
-   FIRST LETTER (GHOST)
+   FIRST LETTER
 ================================= */
 function baseHintString(text) {
   let out = "";
@@ -69,39 +63,33 @@ function baseHintString(text) {
   return out;
 }
 
-function progressiveHint(userText, correctText) {
-  const base = baseHintString(correctText);
-  let result = "";
-  const trimmed = (userText ?? "").slice(0, correctText.length);
-
-  for (let i = 0; i < correctText.length; i++) {
-    if (i < trimmed.length && trimmed[i] === correctText[i]) result += " ";
-    else result += base[i];
-  }
-  return result;
-}
-
 /* ===============================
    QUEUE BUILDING
-   - EP: conditions + actions + actionSub
-   - NWC: adds NOTE/WARNING/CAUTION groups w/ A1/A2 etc
 ================================= */
 function buildQueue(proc) {
   const queue = [];
 
-  const pushCondition = (text) => queue.push({ kind: "condition", text, graded: false });
-  const pushAction = (type, text) => queue.push({ kind: type, text, graded: true });
+  const pushCondition = (text) =>
+    queue.push({ kind: "condition", text, graded: false });
+
+  const pushAction = (type, text) =>
+    queue.push({ kind: type, text, graded: true });
 
   const pushGroup = (groupType, bullets) => {
-    // header line (not graded)
-    queue.push({ kind: "groupHeader", text: groupType.toUpperCase(), graded: false });
+    queue.push({
+      kind: "groupHeader",
+      text: groupType.toUpperCase(),
+      graded: false
+    });
 
-    // bullets: array of bullet arrays; each bullet array contains wrapped lines
     bullets.forEach((bulletLines, letterIdx) => {
       bulletLines.forEach((line, lineIdx) => {
         queue.push({
-          kind: groupType, // "note" | "warning" | "caution"
-          label: String.fromCharCode(65 + letterIdx) + (lineIdx + 1) + ".",
+          kind: groupType,
+          label:
+            String.fromCharCode(65 + letterIdx) +
+            (lineIdx + 1) +
+            ".",
           text: line,
           graded: true
         });
@@ -139,7 +127,6 @@ function render() {
 
   container.innerHTML = "";
 
-  // Title
   const title = document.createElement("h2");
   title.textContent = currentProcedure.title;
   container.appendChild(title);
@@ -170,7 +157,8 @@ function render() {
 
     const block = document.createElement("div");
     block.className = "line-block";
-    // color bars for NWC items
+
+    // COLOR CLASSES (CRITICAL)
     if (item.kind === "note") block.classList.add("note-block");
     if (item.kind === "warning") block.classList.add("warning-block");
     if (item.kind === "caution") block.classList.add("caution-block");
@@ -187,8 +175,6 @@ function render() {
       subLetter++;
     } else if (item.label) {
       label.textContent = item.label;
-    } else {
-      label.textContent = "";
     }
 
     const wrap = document.createElement("div");
@@ -197,52 +183,16 @@ function render() {
     const ta = document.createElement("textarea");
     ta.dataset.index = String(gradedIdx);
 
-    // Hard mode gating
     if (trainingMode === "hard" && gradedIdx !== hardIndex) {
       ta.disabled = true;
     }
-// First-letter mode uses textarea itself (no ghost overlay)
 
-if (firstLetterMode) {
-  const hint = baseHintString(gradedItems[gradedIdx].text);
-  ta.value = hint;
-  resizeBox(ta);
-}
+    if (firstLetterMode) {
+      ta.value = baseHintString(gradedItems[gradedIdx].text);
+      resizeBox(ta);
+    }
 
-// First-letter controlled typing
-ta.addEventListener("keydown", (e) => {
-
-  if (!firstLetterMode) return;
-
-  const idx = parseInt(ta.dataset.index, 10);
-  const correctItem = gradedItems[idx];
-  if (!correctItem) return;
-
-  const correct = correctItem.text;
-  const pos = ta.selectionStart;
-
-  // Allow navigation / control keys
-  if (e.key.length > 1) return;
-
-  // Prevent normal typing behavior
-  e.preventDefault();
-
-  if (pos >= correct.length) return;
-
-  const expectedChar = correct[pos];
-
-  if (e.key === expectedChar) {
-    const valueArray = ta.value.split("");
-    valueArray[pos] = expectedChar;
-    ta.value = valueArray.join("");
-
-    ta.setSelectionRange(pos + 1, pos + 1);
-    resizeBox(ta);
-  }
-});
-
-wrap.appendChild(ta);
-
+    wrap.appendChild(ta);
     block.appendChild(label);
     block.appendChild(wrap);
     container.appendChild(block);
@@ -251,16 +201,16 @@ wrap.appendChild(ta);
   }
 
   updateCounter();
-
-  // After DOM is in place, ensure all boxes are at correct deterministic height
   resizeAllBoxes();
 }
 
 /* ===============================
-   CHECK / RESET / HINT / ALL
+   CHECK / RESET / ALL / HINT
 ================================= */
 function check() {
-  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
+  const inputs = Array.from(
+    document.querySelectorAll(".input-wrap textarea")
+  );
   const queue = buildQueue(currentProcedure);
   const gradedItems = queue.filter(q => q.graded);
 
@@ -284,13 +234,15 @@ function check() {
 
 function reset() {
   hardIndex = 0;
-  render(); // clean rerender resets all fields
+  render();
 }
 
 function showAllAnswers() {
   if (trainingMode === "hard") return;
 
-  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
+  const inputs = Array.from(
+    document.querySelectorAll(".input-wrap textarea")
+  );
   const queue = buildQueue(currentProcedure);
   const gradedItems = queue.filter(q => q.graded);
 
@@ -298,11 +250,6 @@ function showAllAnswers() {
     input.value = gradedItems[i]?.text ?? "";
     input.classList.add("correct");
     input.classList.remove("incorrect");
-
-    // remove ghost once answered
-    const ghost = input.parentElement.querySelector(".ghost");
-    if (ghost) ghost.textContent = "";
-
     resizeBox(input);
   });
 }
@@ -310,12 +257,11 @@ function showAllAnswers() {
 function showHint() {
   if (trainingMode === "hard") return;
 
-  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
   const queue = buildQueue(currentProcedure);
   const gradedItems = queue.filter(q => q.graded);
 
   const idx = Math.min(hardIndex, gradedItems.length - 1);
-  const input = inputs[idx];
+  const input = document.querySelectorAll(".input-wrap textarea")[idx];
   if (!input) return;
 
   input.placeholder = baseHintString(gradedItems[idx].text);
@@ -358,7 +304,7 @@ function randomEp() {
 }
 
 /* ===============================
-   EVENT BINDINGS (SAFE)
+   EVENT BINDINGS
 ================================= */
 function bind() {
   document.getElementById("epMode")?.addEventListener("click", () => {
@@ -374,19 +320,19 @@ function bind() {
   });
 
   document.querySelectorAll("input[name='mode']").forEach(radio => {
-    radio.addEventListener("change", (e) => {
+    radio.addEventListener("change", e => {
       trainingMode = e.target.value;
       hardIndex = 0;
       render();
     });
   });
 
-  document.getElementById("firstLetterToggle")?.addEventListener("change", (e) => {
+  document.getElementById("firstLetterToggle")?.addEventListener("change", e => {
     firstLetterMode = e.target.checked;
     render();
   });
 
-  document.getElementById("caseToggle")?.addEventListener("change", (e) => {
+  document.getElementById("caseToggle")?.addEventListener("change", e => {
     caseSensitive = e.target.checked;
   });
 
