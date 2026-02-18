@@ -1,11 +1,13 @@
 import { procedures } from "./procedures.js";
 
 let currentProcedure = procedures[0];
-let currentMode = "ep";          // "ep" or "nwc"
-let trainingMode = "normal";     // "normal" or "hard"
+let currentMode = "ep";
+let trainingMode = "normal";
 let firstLetterMode = false;
 let caseSensitive = false;
 let hardIndex = 0;
+
+let currentGradedItems = [];
 
 const BASE_HEIGHT_PX = 28;
 
@@ -55,7 +57,7 @@ function progressiveHint(userText, correctText) {
 }
 
 /* ===============================
-   RESIZE (FIXES NWC HEIGHT)
+   RESIZE
 ================================= */
 
 function resizeBox(el, correctText = null) {
@@ -65,7 +67,6 @@ function resizeBox(el, correctText = null) {
 
   requestAnimationFrame(() => {
 
-    // First Letter mode → size from full correct answer
     if (firstLetterMode && correctText) {
       const original = el.value;
       el.value = correctText;
@@ -74,7 +75,6 @@ function resizeBox(el, correctText = null) {
       return;
     }
 
-    // Normal sizing
     if (!el.value.trim()) {
       el.style.height = BASE_HEIGHT_PX + "px";
     } else {
@@ -89,6 +89,7 @@ function resizeBox(el, correctText = null) {
 ================================= */
 
 function buildQueue(proc) {
+
   const queue = [];
 
   const pushCondition = (text) =>
@@ -98,6 +99,7 @@ function buildQueue(proc) {
     queue.push({ kind: type, text, graded: true });
 
   const pushGroup = (groupType, bullets) => {
+
     queue.push({ kind: "groupHeader", text: groupType.toUpperCase(), graded: false });
 
     bullets.forEach((bulletLines, letterIdx) => {
@@ -148,7 +150,7 @@ function render() {
   container.appendChild(title);
 
   const queue = buildQueue(currentProcedure);
-  const gradedItems = queue.filter(q => q.graded);
+  currentGradedItems = queue.filter(q => q.graded);
 
   let gradedIdx = 0;
   let actionNum = 1;
@@ -201,9 +203,10 @@ function render() {
 
     const ta = document.createElement("textarea");
 
-    const correctText = gradedItems[gradedIdx]?.text ?? "";
+    const correctText = currentGradedItems[gradedIdx]?.text ?? "";
 
     if (firstLetterMode) {
+
       ghost.textContent = baseHintString(correctText);
 
       ta.addEventListener("input", () => {
@@ -212,11 +215,12 @@ function render() {
       });
 
       resizeBox(ta, correctText);
-    } else {
-      resizeBox(ta);
-    }
 
-    ta.addEventListener("input", () => resizeBox(ta));
+    } else {
+
+      resizeBox(ta);
+      ta.addEventListener("input", () => resizeBox(ta));
+    }
 
     wrap.appendChild(ghost);
     wrap.appendChild(ta);
@@ -236,13 +240,13 @@ function render() {
 ================================= */
 
 function check() {
+
   const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
-  const queue = buildQueue(currentProcedure);
-  const gradedItems = queue.filter(q => q.graded);
 
   inputs.forEach((input, i) => {
+
     const user = normalize(input.value);
-    const correct = normalize(gradedItems[i]?.text ?? "");
+    const correct = normalize(currentGradedItems[i]?.text ?? "");
 
     if (user === correct) {
       input.classList.add("correct");
@@ -259,12 +263,12 @@ function reset() {
 }
 
 function showAllAnswers() {
+
   const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
-  const queue = buildQueue(currentProcedure);
-  const gradedItems = queue.filter(q => q.graded);
 
   inputs.forEach((input, i) => {
-    input.value = gradedItems[i]?.text ?? "";
+
+    input.value = currentGradedItems[i]?.text ?? "";
     input.classList.add("correct");
 
     const ghost = input.parentElement.querySelector(".ghost");
@@ -332,11 +336,7 @@ function bind() {
     caseSensitive = e.target.checked;
   });
 
-  document.getElementById("checkBtn")?.addEventListener("click", () => {
-    console.log("CHECK CLICKED");
-    check();
-  });
-
+  document.getElementById("checkBtn")?.addEventListener("click", check);
   document.getElementById("allBtn")?.addEventListener("click", showAllAnswers);
   document.getElementById("resetBtn")?.addEventListener("click", reset);
 
@@ -347,5 +347,3 @@ function bind() {
 
 bind();
 render();
-
-
