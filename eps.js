@@ -2,10 +2,8 @@ import { procedures } from "./procedures.js";
 
 let currentProcedure = procedures[0];
 let currentMode = "ep";
-let trainingMode = "normal";
 let firstLetterMode = false;
 let caseSensitive = false;
-let hardIndex = 0;
 
 const BASE_HEIGHT_PX = 28;
 
@@ -55,30 +53,20 @@ function progressiveHint(userText, correctText) {
 }
 
 /* ===============================
-   RESIZE (FINAL STABLE VERSION)
+   RESIZE (SIMPLE + STABLE)
 ================================= */
 
-function resizeBox(el, correctText = null) {
+function resizeBox(el) {
   if (!el) return;
 
   el.style.height = "0px";
 
   requestAnimationFrame(() => {
-
-    if (firstLetterMode && correctText) {
-      // Temporarily measure full correct text
-      const original = el.value;
-      el.value = correctText;
-      el.style.height = el.scrollHeight + "px";
-      el.value = original;
+    if (!el.value.trim()) {
+      el.style.height = BASE_HEIGHT_PX + "px";
     } else {
-      if (!el.value.trim()) {
-        el.style.height = BASE_HEIGHT_PX + "px";
-      } else {
-        el.style.height = el.scrollHeight + "px";
-      }
+      el.style.height = el.scrollHeight + "px";
     }
-
   });
 }
 
@@ -198,7 +186,6 @@ function render() {
     ghost.className = "ghost";
 
     const ta = document.createElement("textarea");
-    ta.dataset.index = String(gradedIdx);
 
     const correctText = gradedItems[gradedIdx]?.text ?? "";
 
@@ -207,13 +194,11 @@ function render() {
 
       ta.addEventListener("input", () => {
         ghost.textContent = progressiveHint(ta.value, correctText);
-        resizeBox(ta, correctText);
+        resizeBox(ta);
       });
-
-      resizeBox(ta, correctText);
-    } else {
-      resizeBox(ta);
     }
+
+    ta.addEventListener("input", () => resizeBox(ta));
 
     wrap.appendChild(ghost);
     wrap.appendChild(ta);
@@ -227,77 +212,22 @@ function render() {
 }
 
 /* ===============================
-   CHECK / RESET / ALL
-================================= */
-
-function check() {
-  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
-  const queue = buildQueue(currentProcedure);
-  const gradedItems = queue.filter(q => q.graded);
-
-  inputs.forEach((input, i) => {
-    const user = normalize(input.value);
-    const correct = normalize(gradedItems[i]?.text ?? "");
-
-    if (user === correct) {
-      input.classList.add("correct");
-      input.classList.remove("incorrect");
-    } else {
-      input.classList.add("incorrect");
-      input.classList.remove("correct");
-    }
-  });
-}
-
-function reset() {
-  render();
-}
-
-function showAllAnswers() {
-  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
-  const queue = buildQueue(currentProcedure);
-  const gradedItems = queue.filter(q => q.graded);
-
-  inputs.forEach((input, i) => {
-    input.value = gradedItems[i]?.text ?? "";
-    input.classList.add("correct");
-
-    const ghost = input.parentElement.querySelector(".ghost");
-    if (ghost) ghost.textContent = "";
-
-    resizeBox(input);
-  });
-}
-
-/* ===============================
    EVENTS
 ================================= */
 
-function bind() {
+document.getElementById("firstLetterToggle")?.addEventListener("change", (e) => {
+  firstLetterMode = e.target.checked;
+  render();
+});
 
-  document.getElementById("epMode")?.addEventListener("click", () => {
-    currentMode = "ep";
-    render();
-  });
+document.getElementById("nwcMode")?.addEventListener("click", () => {
+  currentMode = "nwc";
+  render();
+});
 
-  document.getElementById("nwcMode")?.addEventListener("click", () => {
-    currentMode = "nwc";
-    render();
-  });
+document.getElementById("epMode")?.addEventListener("click", () => {
+  currentMode = "ep";
+  render();
+});
 
-  document.getElementById("firstLetterToggle")?.addEventListener("change", (e) => {
-    firstLetterMode = e.target.checked;
-    render();
-  });
-
-  document.getElementById("caseToggle")?.addEventListener("change", (e) => {
-    caseSensitive = e.target.checked;
-  });
-
-  document.getElementById("checkBtn")?.addEventListener("click", check);
-  document.getElementById("allBtn")?.addEventListener("click", showAllAnswers);
-  document.getElementById("resetBtn")?.addEventListener("click", reset);
-}
-
-bind();
 render();
