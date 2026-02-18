@@ -21,19 +21,32 @@ function normalize(text) {
 /* ===============================
    RESIZE
 ================================= */
-function resizeBox(el) {
+function resizeBox(el, correctText = null) {
   if (!el) return;
 
   const hasText = (el.value ?? "").trim().length > 0;
-  el.style.height = hasText ? "0px" : `${BASE_HEIGHT_PX}px`;
+
+  // Reset first
+  el.style.height = "0px";
 
   requestAnimationFrame(() => {
-    const stillHasText = (el.value ?? "").trim().length > 0;
-    if (!stillHasText) {
-      el.style.height = `${BASE_HEIGHT_PX}px`;
+
+    // Normal mode → size from user text
+    if (!firstLetterMode || !correctText) {
+      if (!hasText) {
+        el.style.height = `${BASE_HEIGHT_PX}px`;
+        return;
+      }
+      el.style.height = el.scrollHeight + "px";
       return;
     }
+
+    // First Letter mode → temporarily measure full correct answer
+    const temp = el.value;
+    el.value = correctText;
     el.style.height = el.scrollHeight + "px";
+    el.value = temp;
+
   });
 }
 
@@ -427,3 +440,4 @@ function bind() {
 
 bind();
 render();
+
