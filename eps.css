@@ -49,7 +49,7 @@ body {
 ================================= */
 
 #content {
-  padding: 18px 20px 130px 20px; /* room for compact bottom bar */
+  padding: 18px 20px 150px 20px;
   max-width: 950px;
   margin: auto;
 }
@@ -106,6 +106,56 @@ h2 {
 }
 
 /* ===============================
+   CORRECT / INCORRECT COLORS
+================================= */
+
+textarea.correct {
+  border-color: #00cc66;
+}
+
+textarea.incorrect {
+  border-color: #cc3333;
+}
+
+/* ===============================
+   CONDITION + GROUP HEADERS
+================================= */
+
+.condition-label {
+  font-style: italic;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #bbb;
+}
+
+.group-header {
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/* ===============================
+   COLOR BARS
+================================= */
+
+.note-block {
+  border-left: 4px solid #3aa0ff;
+  padding-left: 8px;
+}
+
+.warning-block {
+  border-left: 4px solid #ff4444;
+  padding-left: 8px;
+}
+
+.caution-block {
+  border-left: 4px solid #ffcc00;
+  padding-left: 8px;
+}
+
+/* ===============================
    BOTTOM BAR
 ================================= */
 
@@ -118,7 +168,7 @@ h2 {
   background-color: #111;
   border-top: 1px solid #333;
 
-  padding: 4px 0; /* reduced height */
+  padding: 4px 0;
 
   z-index: 1000;
 
@@ -132,7 +182,7 @@ h2 {
   justify-content: center;
   align-items: center;
   gap: 6px;
-  flex-wrap: wrap; /* tight wrapping instead of stacking */
+  flex-wrap: wrap;
 }
 
 /* ===============================
@@ -191,6 +241,6 @@ button:hover {
   }
 
   #content {
-    padding-bottom: 150px; /* slightly more room for wrap */
+    padding-bottom: 160px;
   }
 }
