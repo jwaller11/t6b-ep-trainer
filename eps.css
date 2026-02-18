@@ -82,32 +82,29 @@ h2 {
   flex: 1;
 }
 
-/* Editable field */
-
-.editable {
+.input-wrap textarea {
   width: 100%;
   background-color: transparent;
   color: white;
   border: 1px solid #444;
   padding: 6px 8px;
 
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 16px;
   line-height: 1.4;
 
+  height: 28px;
   min-height: 28px;
 
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  word-break: break-word;
+  overflow-y: hidden;
+  resize: none;
 
   box-sizing: border-box;
   position: relative;
   z-index: 2;
 
-  outline: none;
+  caret-color: white;
 }
-
-/* Ghost overlay */
 
 .ghost {
   position: absolute;
@@ -117,6 +114,7 @@ h2 {
 
   padding: 6px 8px;
 
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 16px;
   line-height: 1.4;
 
@@ -221,3 +219,4 @@ button {
 button:hover {
   background-color: #2a2a2a;
 }
+
