@@ -49,7 +49,7 @@ body {
 ================================= */
 
 #content {
-  padding: 18px 20px 120px 20px;
+  padding: 18px 20px 130px 20px; /* room for compact bottom bar */
   max-width: 950px;
   margin: auto;
 }
@@ -117,7 +117,8 @@ h2 {
 
   background-color: #111;
   border-top: 1px solid #333;
-  padding: 8px 0;
+
+  padding: 4px 0; /* reduced height */
 
   z-index: 1000;
 
@@ -125,23 +126,13 @@ h2 {
   justify-content: center;
 }
 
-/* constrain width to match content */
-.bottom-container-inner {
-  width: 100%;
-  max-width: 950px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-}
-
 .ep-nav,
 .trainer-controls {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
+  flex-wrap: wrap; /* tight wrapping instead of stacking */
 }
 
 /* ===============================
@@ -149,12 +140,12 @@ h2 {
 ================================= */
 
 button {
-  padding: 6px 12px;
+  padding: 6px 8px;
   background-color: #1e1e1e;
   border: 1px solid #444;
   color: white;
   border-radius: 3px;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
 }
 
@@ -189,12 +180,17 @@ button:hover {
     width: calc(100% - 45px);
   }
 
+  .ep-nav,
+  .trainer-controls {
+    gap: 5px;
+  }
+
   button {
-    font-size: 14px;
-    padding: 8px 10px;
+    font-size: 13px;
+    padding: 6px 8px;
   }
 
   #content {
-    padding-bottom: 140px;
+    padding-bottom: 150px; /* slightly more room for wrap */
   }
 }
