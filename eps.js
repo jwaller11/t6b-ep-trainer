@@ -24,25 +24,25 @@ function normalize(text) {
 function resizeBox(el, correctText = null) {
   if (!el) return;
 
-  el.style.height = "0px";
+  const wrap = el.parentElement;
+  if (!wrap) return;
 
-  requestAnimationFrame(() => {
+  let mirror = wrap.querySelector(".mirror");
 
-    // In first-letter mode, size using full correct answer
-    if (firstLetterMode && correctText) {
-      const original = el.value;
-      el.value = correctText;
-      el.style.height = el.scrollHeight + "px";
-      el.value = original;
-    } else {
-      if (!el.value.trim()) {
-        el.style.height = BASE_HEIGHT_PX + "px";
-      } else {
-        el.style.height = el.scrollHeight + "px";
-      }
-    }
+  if (!mirror) {
+    mirror = document.createElement("div");
+    mirror.className = "mirror";
+    wrap.appendChild(mirror);
+  }
 
-  });
+  const textToMeasure =
+    firstLetterMode && correctText
+      ? correctText
+      : el.value || "";
+
+  mirror.textContent = textToMeasure + " ";
+
+  el.style.height = mirror.offsetHeight + "px";
 }
 
 /* ===============================
@@ -360,3 +360,4 @@ function bind() {
 
 bind();
 render();
+
