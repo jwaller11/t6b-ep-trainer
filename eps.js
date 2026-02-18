@@ -5,13 +5,11 @@ let currentMode = "ep";
 let trainingMode = "normal";
 let firstLetterMode = false;
 let caseSensitive = false;
-let hardIndex = 0;
-
-const BASE_HEIGHT_PX = 28;
 
 /* ===============================
    NORMALIZE
 ================================= */
+
 function normalize(text) {
   let cleaned = (text ?? "").replace(/\s+/g, " ").trim();
   if (!caseSensitive) cleaned = cleaned.toLowerCase();
@@ -19,43 +17,15 @@ function normalize(text) {
 }
 
 /* ===============================
-   RESIZE (FIXED FOR NWC)
+   FIRST LETTER
 ================================= */
-function resizeBox(el, correctText = null) {
-  if (!el) return;
 
-  const wrap = el.parentElement;
-  if (!wrap) return;
-
-  let mirror = wrap.querySelector(".mirror");
-
-  if (!mirror) {
-    mirror = document.createElement("div");
-    mirror.className = "mirror";
-    wrap.appendChild(mirror);
-  }
-
-  const textToMeasure =
-    firstLetterMode && correctText
-      ? correctText
-      : el.value || "";
-
-  mirror.textContent = textToMeasure + " ";
-
-  el.style.height = mirror.offsetHeight + "px";
-}
-
-/* ===============================
-   FIRST LETTER GHOST
-================================= */
 function baseHintString(text) {
   let out = "";
   let start = true;
 
-  for (let i = 0; i < text.length; i++) {
-    const ch = text[i];
+  for (let ch of text) {
     const isAlphaNum = /[A-Za-z0-9]/.test(ch);
-
     if (isAlphaNum) {
       out += start ? ch : "_";
       start = false;
@@ -69,7 +39,6 @@ function baseHintString(text) {
 
 function progressiveHint(userText, correctText) {
   const base = baseHintString(correctText);
-
   const u = caseSensitive ? userText : userText.toLowerCase();
   const c = caseSensitive ? correctText : correctText.toLowerCase();
 
@@ -81,19 +50,10 @@ function progressiveHint(userText, correctText) {
   return result;
 }
 
-function attachFirstLetterHandlers(ta, ghostEl, correctText) {
-
-  ghostEl.textContent = baseHintString(correctText);
-
-  ta.addEventListener("input", () => {
-    ghostEl.textContent = progressiveHint(ta.value, correctText);
-    resizeBox(ta, correctText);
-  });
-}
-
 /* ===============================
-   QUEUE BUILDER
+   QUEUE
 ================================= */
+
 function buildQueue(proc) {
   const queue = [];
 
@@ -140,6 +100,7 @@ function buildQueue(proc) {
 /* ===============================
    RENDER
 ================================= */
+
 function render() {
 
   const container = document.getElementById("content");
@@ -201,25 +162,22 @@ function render() {
     const ghost = document.createElement("div");
     ghost.className = "ghost";
 
-    const ta = document.createElement("textarea");
-    ta.dataset.index = String(gradedIdx);
-
-    if (trainingMode === "hard" && gradedIdx !== hardIndex) {
-      ta.disabled = true;
-    }
+    const editable = document.createElement("div");
+    editable.className = "editable";
+    editable.contentEditable = true;
 
     const correctText = gradedItems[gradedIdx]?.text ?? "";
 
     if (firstLetterMode) {
-      attachFirstLetterHandlers(ta, ghost, correctText);
-      resizeBox(ta, correctText);
-    } else {
-      ghost.textContent = "";
-      resizeBox(ta);
+      ghost.textContent = baseHintString(correctText);
+
+      editable.addEventListener("input", () => {
+        ghost.textContent = progressiveHint(editable.innerText, correctText);
+      });
     }
 
     wrap.appendChild(ghost);
-    wrap.appendChild(ta);
+    wrap.appendChild(editable);
 
     block.appendChild(label);
     block.appendChild(wrap);
@@ -227,20 +185,19 @@ function render() {
 
     gradedIdx++;
   }
-
-  updateCounter();
 }
 
 /* ===============================
-   CHECK / RESET / HINT / ALL
+   CHECK / RESET / ALL
 ================================= */
+
 function check() {
-  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
+  const inputs = Array.from(document.querySelectorAll(".editable"));
   const queue = buildQueue(currentProcedure);
   const gradedItems = queue.filter(q => q.graded);
 
   inputs.forEach((input, i) => {
-    const user = normalize(input.value);
+    const user = normalize(input.innerText);
     const correct = normalize(gradedItems[i]?.text ?? "");
 
     if (user === correct) {
@@ -254,72 +211,27 @@ function check() {
 }
 
 function reset() {
-  hardIndex = 0;
   render();
 }
 
 function showAllAnswers() {
-  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
+  const inputs = Array.from(document.querySelectorAll(".editable"));
   const queue = buildQueue(currentProcedure);
   const gradedItems = queue.filter(q => q.graded);
 
   inputs.forEach((input, i) => {
-    input.value = gradedItems[i]?.text ?? "";
+    input.innerText = gradedItems[i]?.text ?? "";
     input.classList.add("correct");
-    input.classList.remove("incorrect");
 
     const ghost = input.parentElement.querySelector(".ghost");
     if (ghost) ghost.textContent = "";
-
-    resizeBox(input);
   });
-}
-
-function showHint() {
-  if (trainingMode === "hard") return;
-
-  const queue = buildQueue(currentProcedure);
-  const gradedItems = queue.filter(q => q.graded);
-
-  const input = document.querySelector(".input-wrap textarea");
-  if (!input) return;
-
-  input.placeholder = baseHintString(gradedItems[0].text);
-}
-
-/* ===============================
-   PAGINATION
-================================= */
-function updateCounter() {
-  const counter = document.getElementById("epCounter");
-  const index = procedures.indexOf(currentProcedure);
-  counter.textContent = `${index + 1} of ${procedures.length}`;
-}
-
-function prevEp() {
-  const index = procedures.indexOf(currentProcedure);
-  if (index > 0) {
-    currentProcedure = procedures[index - 1];
-    render();
-  }
-}
-
-function nextEp() {
-  const index = procedures.indexOf(currentProcedure);
-  if (index < procedures.length - 1) {
-    currentProcedure = procedures[index + 1];
-    render();
-  }
-}
-
-function randomEp() {
-  currentProcedure = procedures[Math.floor(Math.random() * procedures.length)];
-  render();
 }
 
 /* ===============================
    EVENTS
 ================================= */
+
 function bind() {
 
   document.getElementById("epMode")?.addEventListener("click", () => {
@@ -332,13 +244,6 @@ function bind() {
     render();
   });
 
-  document.querySelectorAll("input[name='mode']").forEach(radio => {
-    radio.addEventListener("change", (e) => {
-      trainingMode = e.target.value;
-      render();
-    });
-  });
-
   document.getElementById("firstLetterToggle")?.addEventListener("change", (e) => {
     firstLetterMode = e.target.checked;
     render();
@@ -349,15 +254,9 @@ function bind() {
   });
 
   document.getElementById("checkBtn")?.addEventListener("click", check);
-  document.getElementById("hintBtn")?.addEventListener("click", showHint);
   document.getElementById("allBtn")?.addEventListener("click", showAllAnswers);
   document.getElementById("resetBtn")?.addEventListener("click", reset);
-
-  document.getElementById("prevEpBtn")?.addEventListener("click", prevEp);
-  document.getElementById("nextEpBtn")?.addEventListener("click", nextEp);
-  document.getElementById("randomEpBtn")?.addEventListener("click", randomEp);
 }
 
 bind();
 render();
-
