@@ -84,8 +84,9 @@ function forceCaretToEnd(ta) {
 
 function attachFirstLetterHandlers(ta, ghostEl, correctText) {
   const updateGhost = () => {
-    ghostEl.textContent = progressiveHint(ta.value, correctText);
-  };
+  ghostEl.textContent = progressiveHint(ta.value, correctText);
+  ghostEl.style.height = ta.style.height;
+};
 
   // initialize
   updateGhost();
@@ -132,7 +133,10 @@ function attachFirstLetterHandlers(ta, ghostEl, correctText) {
     if (pos >= correctText.length) return;
 
     const expectedChar = correctText[pos];
-    if (e.key === expectedChar) {
+   const typed = caseSensitive ? e.key : e.key.toLowerCase();
+const expected = caseSensitive ? expectedChar : expectedChar.toLowerCase();
+
+if (typed === expected) {
       ta.value += expectedChar;
       updateGhost();
       resizeBox(ta);
@@ -456,3 +460,4 @@ function bind() {
 
 bind();
 render();
+
