@@ -332,7 +332,11 @@ function bind() {
     caseSensitive = e.target.checked;
   });
 
-  document.getElementById("checkBtn")?.addEventListener("click", check);
+  document.getElementById("checkBtn")?.addEventListener("click", () => {
+    console.log("CHECK CLICKED");
+    check();
+  });
+
   document.getElementById("allBtn")?.addEventListener("click", showAllAnswers);
   document.getElementById("resetBtn")?.addEventListener("click", reset);
 
@@ -343,3 +347,5 @@ function bind() {
 
 bind();
 render();
+
+
