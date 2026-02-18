@@ -16,7 +16,13 @@ const BASE_HEIGHT_PX = 28;
 ================================= */
 
 function normalize(text) {
-  let cleaned = (text ?? "").replace(/\s+/g, " ").trim();
+  let cleaned = (text ?? "")
+    .replace(/\r?\n/g, " ")          // remove line breaks
+    .replace(/[–—]/g, "-")           // normalize dash types
+    .replace(/\u00A0/g, " ")         // remove non-breaking spaces
+    .replace(/\s+/g, " ")            // collapse spaces
+    .trim();
+
   if (!caseSensitive) cleaned = cleaned.toLowerCase();
   return cleaned;
 }
@@ -347,3 +353,4 @@ function bind() {
 
 bind();
 render();
+
