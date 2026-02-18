@@ -1,8 +1,8 @@
 import { procedures } from "./procedures.js";
 
 let currentProcedure = procedures[0];
-let currentMode = "ep";              // "ep" or "nwc"
-let trainingMode = "normal";         // "normal" or "hard"
+let currentMode = "ep";
+let trainingMode = "normal";
 let firstLetterMode = false;
 let caseSensitive = false;
 let hardIndex = 0;
@@ -42,7 +42,7 @@ function resizeAllBoxes() {
 }
 
 /* ===============================
-   FIRST LETTER
+   FIRST LETTER HINT
 ================================= */
 function baseHintString(text) {
   let out = "";
@@ -158,7 +158,6 @@ function render() {
     const block = document.createElement("div");
     block.className = "line-block";
 
-    // COLOR CLASSES (CRITICAL)
     if (item.kind === "note") block.classList.add("note-block");
     if (item.kind === "warning") block.classList.add("warning-block");
     if (item.kind === "caution") block.classList.add("caution-block");
@@ -188,9 +187,34 @@ function render() {
     }
 
     if (firstLetterMode) {
-      ta.value = baseHintString(gradedItems[gradedIdx].text);
-      resizeBox(ta);
+      ta.placeholder = baseHintString(gradedItems[gradedIdx].text);
     }
+
+    ta.addEventListener("keydown", (e) => {
+
+      if (!firstLetterMode) return;
+
+      const idx = parseInt(ta.dataset.index, 10);
+      const correctItem = gradedItems[idx];
+      if (!correctItem) return;
+
+      const correct = correctItem.text;
+      const currentValue = ta.value;
+      const pos = currentValue.length;
+
+      if (e.key.length > 1) return; // allow control keys
+
+      e.preventDefault();
+
+      if (pos >= correct.length) return;
+
+      const expectedChar = correct[pos];
+
+      if (e.key === expectedChar) {
+        ta.value += expectedChar;
+        resizeBox(ta);
+      }
+    });
 
     wrap.appendChild(ta);
     block.appendChild(label);
@@ -264,7 +288,9 @@ function showHint() {
   const input = document.querySelectorAll(".input-wrap textarea")[idx];
   if (!input) return;
 
-  input.placeholder = baseHintString(gradedItems[idx].text);
+  if (firstLetterMode) {
+    input.placeholder = baseHintString(gradedItems[idx].text);
+  }
 }
 
 /* ===============================
