@@ -1,13 +1,20 @@
 /* ===============================
-   GLOBAL
+   GLOBAL LAYOUT
 ================================= */
 
 * {
   box-sizing: border-box;
 }
 
-body {
+html, body {
+  height: 100%;
   margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+
   background-color: #0f0f0f;
   color: white;
   font-family: Arial, sans-serif;
@@ -20,10 +27,11 @@ body {
 .top-controls {
   position: sticky;
   top: 0;
+
   background-color: #111;
   border-bottom: 1px solid #333;
   padding: 6px 20px;
-  z-index: 999;
+  z-index: 1000;
 
   display: flex;
   justify-content: space-between;
@@ -49,10 +57,12 @@ body {
 ================================= */
 
 #content {
+  flex: 1;                /* pushes bottom bar down */
+  overflow-y: auto;       /* scroll only content */
   padding: 18px 20px;
-  padding-bottom: 180px; /* space for fixed bottom bar */
   max-width: 950px;
   margin: auto;
+  width: 100%;
 }
 
 h2 {
@@ -108,8 +118,6 @@ h2 {
   overflow-y: hidden;
   resize: none;
 
-  box-sizing: border-box;
-
   position: relative;
   z-index: 2;
 }
@@ -161,20 +169,18 @@ textarea.incorrect {
 }
 
 /* ===============================
-   LOCKED BOTTOM BAR
+   BOTTOM BAR (NOW STABLE)
 ================================= */
 
 .bottom-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-
   background-color: #111;
   border-top: 1px solid #333;
   padding: 8px 0;
 
-  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 .ep-nav,
@@ -183,6 +189,7 @@ textarea.incorrect {
   justify-content: center;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 /* ===============================
@@ -190,7 +197,7 @@ textarea.incorrect {
 ================================= */
 
 button {
-  padding: 6px 12px;
+  padding: 8px 14px;
   background-color: #1e1e1e;
   border: 1px solid #444;
   color: white;
@@ -209,7 +216,6 @@ button:hover {
 
 @media (max-width: 768px) {
 
-  /* Stack top controls */
   .top-controls {
     flex-direction: column;
     align-items: flex-start;
@@ -222,13 +228,6 @@ button:hover {
     flex-wrap: wrap;
   }
 
-  /* Adjust content padding for taller bottom bar */
-  #content {
-    padding: 15px 12px;
-    padding-bottom: 260px; /* enough space when buttons stack */
-  }
-
-  /* Slightly smaller label width */
   .line-label {
     width: 35px;
     font-size: 13px;
@@ -238,20 +237,17 @@ button:hover {
     width: calc(100% - 45px);
   }
 
-  /* Stack bottom controls vertically */
   .ep-nav,
   .trainer-controls {
     flex-direction: column;
-    gap: 8px;
+    width: 100%;
   }
 
-  /* Make buttons full width */
   .ep-nav button,
   .trainer-controls button {
     width: 90%;
   }
 
-  /* Increase tap comfort */
   button {
     font-size: 15px;
     padding: 10px 12px;
