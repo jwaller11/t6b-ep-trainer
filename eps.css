@@ -88,11 +88,36 @@ h2 {
   position: relative;
 }
 
+/* GHOST (First Letter Mode Overlay) */
+
+.ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  padding: 6px 8px;
+  font-size: 16px;
+  line-height: 1.4;
+
+  color: rgba(255,255,255,0.35);
+
+  white-space: pre-wrap;
+  pointer-events: none;
+
+  z-index: 1;
+}
+
+/* TEXTAREA */
+
 .input-wrap textarea {
   width: 100%;
+
   background-color: transparent;
   color: white;
+
   border: 1px solid #444;
+
   padding: 6px 8px;
 
   font-size: 16px;
@@ -103,36 +128,13 @@ h2 {
 
   overflow-y: hidden;
   resize: none;
-}
-/* ===============================
-   GHOST OVERLAY (FIRST LETTER MODE)
-================================= */
 
-.input-wrap {
-  position: relative;   /* already there, but safe */
-}
-
-.ghost {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-
-  padding: 6px 8px;      /* MUST match textarea padding */
-  font-size: 16px;       /* MUST match textarea font-size */
-  line-height: 1.4;      /* MUST match textarea line-height */
-
-  color: rgba(255,255,255,0.35);
-  white-space: pre-wrap;
-  pointer-events: none;  /* makes it non-editable */
-  z-index: 1;
-}
-
-.input-wrap textarea {
   position: relative;
   z-index: 2;
-  background: transparent;
+
+  caret-color: white;
 }
+
 /* ===============================
    CORRECT / INCORRECT COLORS
 ================================= */
@@ -170,19 +172,19 @@ textarea.incorrect {
 
 .note-block {
   border-left: 4px solid #3aa0ff;
-  background-color: rgba(58, 160, 255, 0.08);
+  background-color: rgba(58,160,255,0.08);
   padding-left: 10px;
 }
 
 .warning-block {
   border-left: 4px solid #ff4444;
-  background-color: rgba(255, 68, 68, 0.08);
+  background-color: rgba(255,68,68,0.08);
   padding-left: 10px;
 }
 
 .caution-block {
   border-left: 4px solid #ffcc00;
-  background-color: rgba(255, 204, 0, 0.08);
+  background-color: rgba(255,204,0,0.08);
   padding-left: 10px;
 }
 
@@ -235,7 +237,7 @@ button:hover {
 }
 
 /* ===============================
-   MOBILE TWEAK
+   MOBILE
 ================================= */
 
 @media (max-width: 768px) {
@@ -261,19 +263,12 @@ button:hover {
     width: calc(100% - 45px);
   }
 
-  .ep-nav,
-  .trainer-controls {
-    gap: 5px;
-  }
-
   button {
     font-size: 13px;
     padding: 6px 8px;
   }
 
   #content {
-    padding-bottom: 160px;
+    padding-bottom: 170px;
   }
 }
-
-
