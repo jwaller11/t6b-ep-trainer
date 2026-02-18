@@ -92,24 +92,25 @@ h2 {
 
 .ghost {
   position: absolute;
-  inset: 0;               /* replaces top/left/width */
+  inset: 0;
 
   padding: 6px 8px;
-  font-size: 16px;
-  line-height: 1.4;
 
-  font-family: inherit;   /* CRITICAL */
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
   letter-spacing: inherit;
 
   color: rgba(255,255,255,0.35);
 
   white-space: pre-wrap;
   overflow-wrap: break-word;
+  word-break: break-word;
+
+  box-sizing: border-box;
 
   pointer-events: none;
   z-index: 1;
-   box-sizing: border-box;
-
 }
 
 /* TEXTAREA */
@@ -124,8 +125,10 @@ h2 {
 
   padding: 6px 8px;
 
+  font-family: inherit;
   font-size: 16px;
   line-height: 1.4;
+  letter-spacing: normal;
 
   height: 28px;
   min-height: 28px;
@@ -135,6 +138,8 @@ h2 {
 
   position: relative;
   z-index: 2;
+
+  box-sizing: border-box;
 
   caret-color: white;
 }
@@ -276,5 +281,6 @@ button:hover {
     padding-bottom: 170px;
   }
 }
+
 
 
