@@ -1,0 +1,200 @@
+body {
+  margin: 0;
+  background-color: #0f0f0f;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+/* ===============================
+   TOP HEADER BAR
+================================= */
+
+.top-controls {
+  position: sticky;
+  top: 0;
+  background-color: #111;
+  border-bottom: 1px solid #333;
+  padding: 6px 20px;
+  z-index: 999;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mode-section,
+.training-section {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.training-section label {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===============================
+   CONTENT AREA
+================================= */
+
+#content {
+  padding: 18px 20px 140px 20px;
+  max-width: 950px;
+  margin: auto;
+}
+
+h2 {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+/* ===============================
+   LINE BLOCKS
+================================= */
+
+.line-block {
+  display: block;   /* remove flex */
+  margin: 8px 0;
+}
+
+.line-label {
+  display: inline-block;
+  width: 40px;
+  vertical-align: top;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+/* ===============================
+   INPUT AREA
+================================= */
+
+.input-wrap {
+  display: inline-block;
+  width: calc(100% - 50px);
+  vertical-align: top;
+  position: relative;
+}
+
+
+.input-wrap textarea {
+  width: 100%;
+
+  background-color: transparent;
+  color: white;
+  border: 1px solid #444;
+
+  padding: 6px 8px;
+
+  font-size: 14px;
+  line-height: 1.4;
+
+  height: 28px;        /* single-line base */
+  min-height: 28px;
+  max-height: none;    /* IMPORTANT — do not cap growth */
+
+  overflow-y: hidden;  /* prevents scrollbars */
+  resize: none;        /* user cannot manually drag */
+
+  box-sizing: border-box;
+
+  position: relative;
+  z-index: 2;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.input-wrap textarea.correct {
+  border-color: #00cc66;
+}
+
+.input-wrap textarea.incorrect {
+  border-color: #cc3333;
+}
+
+/* ===============================
+   CONDITION + GROUP HEADERS
+================================= */
+
+.condition-label {
+  font-style: italic;
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  color: #bbb;
+}
+
+.group-header {
+  margin-top: 12px;
+  margin-bottom: 4px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/* ===============================
+   COLOR BARS
+================================= */
+
+.note-block {
+  border-left: 3px solid #3aa0ff;
+  padding-left: 6px;
+}
+
+.warning-block {
+  border-left: 3px solid #ff4444;
+  padding-left: 6px;
+}
+
+.caution-block {
+  border-left: 3px solid #ffcc00;
+  padding-left: 6px;
+}
+
+/* ===============================
+   LOCKED BOTTOM
+================================= */
+
+.bottom-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  background-color: #111;
+  border-top: 1px solid #333;
+  padding: 8px 0;
+
+  z-index: 1000;
+}
+
+.ep-nav,
+.trainer-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ===============================
+   BUTTONS
+================================= */
+
+button {
+  padding: 4px 10px;
+  background-color: #1e1e1e;
+  border: 1px solid #444;
+  color: white;
+  border-radius: 3px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2a2a2a;
+}

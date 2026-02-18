@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>T-6B EP Trainer</title>
+  <link rel="stylesheet" href="eps.css" />
+</head>
+<body>
+
+  <!-- TOP MODE BAR -->
+  <div class="top-controls">
+
+    <div class="mode-section">
+      <button id="epMode">EP Mode</button>
+      <button id="nwcMode">NWCs Mode</button>
+    </div>
+
+    <div class="training-section">
+      <label>
+        <input type="radio" name="mode" value="normal" checked>
+        Normal
+      </label>
+
+      <label>
+        <input type="radio" name="mode" value="hard">
+        Hard
+      </label>
+
+      <label>
+        <input type="checkbox" id="firstLetterToggle">
+        First Letter
+      </label>
+
+      <label>
+        <input type="checkbox" id="caseToggle">
+        Case Sensitive
+      </label>
+    </div>
+
+  </div>
+
+  <!-- SCROLLABLE CONTENT -->
+  <div id="content"></div>
+
+  <!-- LOCKED BOTTOM CONTROLS -->
+  <div class="bottom-container">
+
+    <div class="ep-nav">
+      <button id="prevEpBtn">Previous</button>
+      <span id="epCounter">1 of 1</span>
+      <button id="nextEpBtn">Next</button>
+      <button id="randomEpBtn">Random</button>
+    </div>
+
+    <div class="trainer-controls">
+      <button id="checkBtn">Check</button>
+      <button id="hintBtn">Hint</button>
+      <button id="allBtn">All Answers</button>
+      <button id="resetBtn">Reset</button>
+    </div>
+
+  </div>
+
+  <script type="module" src="eps.js"></script>
+</body>
+</html>
