@@ -5,6 +5,9 @@ let currentMode = "ep";
 let trainingMode = "normal";
 let firstLetterMode = false;
 let caseSensitive = false;
+let hardIndex = 0;
+
+const BASE_HEIGHT_PX = 28;
 
 /* ===============================
    NORMALIZE
@@ -26,6 +29,7 @@ function baseHintString(text) {
 
   for (let ch of text) {
     const isAlphaNum = /[A-Za-z0-9]/.test(ch);
+
     if (isAlphaNum) {
       out += start ? ch : "_";
       start = false;
@@ -51,14 +55,45 @@ function progressiveHint(userText, correctText) {
 }
 
 /* ===============================
+   RESIZE (FINAL STABLE VERSION)
+================================= */
+
+function resizeBox(el, correctText = null) {
+  if (!el) return;
+
+  el.style.height = "0px";
+
+  requestAnimationFrame(() => {
+
+    if (firstLetterMode && correctText) {
+      // Temporarily measure full correct text
+      const original = el.value;
+      el.value = correctText;
+      el.style.height = el.scrollHeight + "px";
+      el.value = original;
+    } else {
+      if (!el.value.trim()) {
+        el.style.height = BASE_HEIGHT_PX + "px";
+      } else {
+        el.style.height = el.scrollHeight + "px";
+      }
+    }
+
+  });
+}
+
+/* ===============================
    QUEUE
 ================================= */
 
 function buildQueue(proc) {
   const queue = [];
 
-  const pushCondition = (text) => queue.push({ kind: "condition", text, graded: false });
-  const pushAction = (type, text) => queue.push({ kind: type, text, graded: true });
+  const pushCondition = (text) =>
+    queue.push({ kind: "condition", text, graded: false });
+
+  const pushAction = (type, text) =>
+    queue.push({ kind: type, text, graded: true });
 
   const pushGroup = (groupType, bullets) => {
     queue.push({ kind: "groupHeader", text: groupType.toUpperCase(), graded: false });
@@ -162,22 +197,26 @@ function render() {
     const ghost = document.createElement("div");
     ghost.className = "ghost";
 
-    const editable = document.createElement("div");
-    editable.className = "editable";
-    editable.contentEditable = true;
+    const ta = document.createElement("textarea");
+    ta.dataset.index = String(gradedIdx);
 
     const correctText = gradedItems[gradedIdx]?.text ?? "";
 
     if (firstLetterMode) {
       ghost.textContent = baseHintString(correctText);
 
-      editable.addEventListener("input", () => {
-        ghost.textContent = progressiveHint(editable.innerText, correctText);
+      ta.addEventListener("input", () => {
+        ghost.textContent = progressiveHint(ta.value, correctText);
+        resizeBox(ta, correctText);
       });
+
+      resizeBox(ta, correctText);
+    } else {
+      resizeBox(ta);
     }
 
     wrap.appendChild(ghost);
-    wrap.appendChild(editable);
+    wrap.appendChild(ta);
 
     block.appendChild(label);
     block.appendChild(wrap);
@@ -192,12 +231,12 @@ function render() {
 ================================= */
 
 function check() {
-  const inputs = Array.from(document.querySelectorAll(".editable"));
+  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
   const queue = buildQueue(currentProcedure);
   const gradedItems = queue.filter(q => q.graded);
 
   inputs.forEach((input, i) => {
-    const user = normalize(input.innerText);
+    const user = normalize(input.value);
     const correct = normalize(gradedItems[i]?.text ?? "");
 
     if (user === correct) {
@@ -215,16 +254,18 @@ function reset() {
 }
 
 function showAllAnswers() {
-  const inputs = Array.from(document.querySelectorAll(".editable"));
+  const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
   const queue = buildQueue(currentProcedure);
   const gradedItems = queue.filter(q => q.graded);
 
   inputs.forEach((input, i) => {
-    input.innerText = gradedItems[i]?.text ?? "";
+    input.value = gradedItems[i]?.text ?? "";
     input.classList.add("correct");
 
     const ghost = input.parentElement.querySelector(".ghost");
     if (ghost) ghost.textContent = "";
+
+    resizeBox(input);
   });
 }
 
