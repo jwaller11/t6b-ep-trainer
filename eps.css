@@ -220,7 +220,7 @@ button:hover {
 
   /* Adjust content padding so bottom bar doesn’t cover */
   #content {
-    padding: 18px 20px 180px 20px;
+    padding: 12px 4px 142px 4px;
   }
 
   /* Make labels slightly smaller */
@@ -252,4 +252,5 @@ button:hover {
     padding: 8px 10px;
   }
 }
+
 
