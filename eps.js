@@ -1,8 +1,8 @@
 import { procedures } from "./procedures.js";
 
 let currentProcedure = procedures[0];
-let currentMode = "ep";
-let trainingMode = "normal";
+let currentMode = "ep";              // "ep" or "nwc"
+let trainingMode = "normal";         // "normal" or "hard"
 let firstLetterMode = false;
 let caseSensitive = false;
 let hardIndex = 0;
@@ -42,7 +42,7 @@ function resizeAllBoxes() {
 }
 
 /* ===============================
-   FIRST LETTER GHOST
+   FIRST LETTER (GHOST OVERLAY)
 ================================= */
 function baseHintString(text) {
   let out = "";
@@ -63,67 +63,75 @@ function baseHintString(text) {
   return out;
 }
 
+// Ghost disappears ONLY where user typed the correct char at that same index.
+// Does NOT alter user input.
 function progressiveHint(userText, correctText) {
   const base = baseHintString(correctText);
-  const trimmed = (userText ?? "").slice(0, correctText.length);
+
+  const u = userText ?? "";
+  const c = correctText ?? "";
+
+  // compare with/without case sensitivity, but preserve base chars
+  const uCmp = caseSensitive ? u : u.toLowerCase();
+  const cCmp = caseSensitive ? c : c.toLowerCase();
 
   let result = "";
-
-  for (let i = 0; i < correctText.length; i++) {
-    if (i < trimmed.length && trimmed[i] === correctText[i]) {
-      result += " ";
-    } else {
-      result += base[i];
-    }
+  for (let i = 0; i < c.length; i++) {
+    const userHasChar = i < uCmp.length;
+    if (userHasChar && uCmp[i] === cCmp[i]) result += " ";
+    else result += base[i];
   }
-
   return result;
 }
 
-function attachFirstLetterHandlers(ta, ghostEl, correctText) {
+function forceCaretToEnd(ta) {
+  const n = (ta.value ?? "").length;
+  ta.setSelectionRange(n, n);
+}
 
+function attachFirstLetterHandlers(ta, ghostEl, correctText) {
   const updateGhost = () => {
     ghostEl.textContent = progressiveHint(ta.value, correctText);
-    ghostEl.style.height = ta.style.height;
+    // keep overlay height in sync with auto-resize
+    ghostEl.style.height = ta.offsetHeight + "px";
   };
 
-  // Keep caret at end always
-  const forceCaret = () => {
-    const len = ta.value.length;
-    ta.setSelectionRange(len, len);
-  };
-
-  ta.addEventListener("focus", forceCaret);
-  ta.addEventListener("mouseup", () => setTimeout(forceCaret, 0));
-
-  ta.addEventListener("input", () => {
-
-    if (!firstLetterMode) return;
-
-    let typed = ta.value;
-
-    let compareTyped = caseSensitive ? typed : typed.toLowerCase();
-    let compareCorrect = caseSensitive ? correctText : correctText.toLowerCase();
-
-    let good = "";
-
-    for (let i = 0; i < compareTyped.length && i < compareCorrect.length; i++) {
-      if (compareTyped[i] === compareCorrect[i]) {
-        good += typed[i]; // preserve original case
-      } else {
-        break;
-      }
-    }
-
-    if (good !== typed) {
-      ta.value = good;
-    }
-
-    updateGhost();
-    resizeBox(ta);
-    forceCaret();
+  // Keep caret at end (so “first-letter mode” feels like forward entry),
+  // but DO NOT block or modify typing.
+  ta.addEventListener("focus", () => {
+    requestAnimationFrame(() => forceCaretToEnd(ta));
   });
 
+  ta.addEventListener("mouseup", () => {
+    requestAnimationFrame(() => forceCaretToEnd(ta));
+  });
+
+  ta.addEventListener("keydown", (e) => {
+    if (!firstLetterMode) return;
+
+    // Allow Tab navigation
+    if (e.key === "Tab") return;
+
+    // If user tries to move cursor, snap back on next frame
+    if (
+      e.key === "ArrowLeft" || e.key === "ArrowRight" ||
+      e.key === "ArrowUp" || e.key === "ArrowDown" ||
+      e.key === "Home" || e.key === "End"
+    ) {
+      requestAnimationFrame(() => forceCaretToEnd(ta));
+    }
+  });
+
+  // On any input change, update ghost + resize. Never clamp/trim value.
+  ta.addEventListener("input", () => {
+    if (!firstLetterMode) return;
+    resizeBox(ta);
+    updateGhost();
+    requestAnimationFrame(() => forceCaretToEnd(ta));
+  });
+
+  // Initialize
+  ghostEl.textContent = baseHintString(correctText);
   updateGhost();
 }
 
@@ -133,18 +141,11 @@ function attachFirstLetterHandlers(ta, ghostEl, correctText) {
 function buildQueue(proc) {
   const queue = [];
 
-  const pushCondition = (text) =>
-    queue.push({ kind: "condition", text, graded: false });
-
-  const pushAction = (type, text) =>
-    queue.push({ kind: type, text, graded: true });
+  const pushCondition = (text) => queue.push({ kind: "condition", text, graded: false });
+  const pushAction = (type, text) => queue.push({ kind: type, text, graded: true });
 
   const pushGroup = (groupType, bullets) => {
-    queue.push({
-      kind: "groupHeader",
-      text: groupType.toUpperCase(),
-      graded: false
-    });
+    queue.push({ kind: "groupHeader", text: groupType.toUpperCase(), graded: false });
 
     bullets.forEach((bulletLines, letterIdx) => {
       bulletLines.forEach((line, lineIdx) => {
@@ -200,7 +201,6 @@ function render() {
   let subLetter = 0;
 
   for (const item of queue) {
-
     if (item.kind === "condition") {
       const cond = document.createElement("div");
       cond.className = "condition-label";
@@ -236,6 +236,8 @@ function render() {
       subLetter++;
     } else if (item.label) {
       label.textContent = item.label;
+    } else {
+      label.textContent = "";
     }
 
     const wrap = document.createElement("div");
@@ -254,7 +256,6 @@ function render() {
     const correctText = gradedItems[gradedIdx]?.text ?? "";
 
     if (firstLetterMode) {
-      ghost.textContent = baseHintString(correctText);
       attachFirstLetterHandlers(ta, ghost, correctText);
     } else {
       ghost.textContent = "";
@@ -275,7 +276,7 @@ function render() {
 }
 
 /* ===============================
-   CHECK / RESET / ALL / HINT
+   CHECK / RESET / HINT / ALL
 ================================= */
 function check() {
   const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
@@ -289,8 +290,14 @@ function check() {
     if (user === correct) {
       input.classList.add("correct");
       input.classList.remove("incorrect");
+
+      if (trainingMode === "hard" && i === hardIndex) {
+        hardIndex = Math.min(hardIndex + 1, gradedItems.length - 1);
+        render();
+      }
     } else {
       input.classList.add("incorrect");
+      input.classList.remove("correct");
     }
   });
 }
@@ -332,6 +339,8 @@ function showHint() {
   if (firstLetterMode) {
     const ghost = input.parentElement.querySelector(".ghost");
     if (ghost) ghost.textContent = baseHintString(gradedItems[idx].text);
+  } else {
+    input.placeholder = baseHintString(gradedItems[idx].text);
   }
 }
 
@@ -350,6 +359,7 @@ function prevEp() {
   const index = procedures.indexOf(currentProcedure);
   if (index > 0) {
     currentProcedure = procedures[index - 1];
+    hardIndex = 0;
     render();
   }
 }
@@ -358,6 +368,7 @@ function nextEp() {
   const index = procedures.indexOf(currentProcedure);
   if (index < procedures.length - 1) {
     currentProcedure = procedures[index + 1];
+    hardIndex = 0;
     render();
   }
 }
@@ -365,6 +376,7 @@ function nextEp() {
 function randomEp() {
   const randomIndex = Math.floor(Math.random() * procedures.length);
   currentProcedure = procedures[randomIndex];
+  hardIndex = 0;
   render();
 }
 
@@ -374,28 +386,33 @@ function randomEp() {
 function bind() {
   document.getElementById("epMode")?.addEventListener("click", () => {
     currentMode = "ep";
+    hardIndex = 0;
     render();
   });
 
   document.getElementById("nwcMode")?.addEventListener("click", () => {
     currentMode = "nwc";
+    hardIndex = 0;
     render();
   });
 
   document.querySelectorAll("input[name='mode']").forEach(radio => {
-    radio.addEventListener("change", e => {
+    radio.addEventListener("change", (e) => {
       trainingMode = e.target.value;
+      hardIndex = 0;
       render();
     });
   });
 
-  document.getElementById("firstLetterToggle")?.addEventListener("change", e => {
+  document.getElementById("firstLetterToggle")?.addEventListener("change", (e) => {
     firstLetterMode = e.target.checked;
     render();
   });
 
-  document.getElementById("caseToggle")?.addEventListener("change", e => {
+  document.getElementById("caseToggle")?.addEventListener("change", (e) => {
     caseSensitive = e.target.checked;
+    // update ghost comparisons immediately
+    if (firstLetterMode) render();
   });
 
   document.getElementById("checkBtn")?.addEventListener("click", check);
