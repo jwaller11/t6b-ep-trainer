@@ -104,7 +104,35 @@ h2 {
   overflow-y: hidden;
   resize: none;
 }
+/* ===============================
+   GHOST OVERLAY (FIRST LETTER MODE)
+================================= */
 
+.input-wrap {
+  position: relative;   /* already there, but safe */
+}
+
+.ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  padding: 6px 8px;      /* MUST match textarea padding */
+  font-size: 16px;       /* MUST match textarea font-size */
+  line-height: 1.4;      /* MUST match textarea line-height */
+
+  color: rgba(255,255,255,0.35);
+  white-space: pre-wrap;
+  pointer-events: none;  /* makes it non-editable */
+  z-index: 1;
+}
+
+.input-wrap textarea {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+}
 /* ===============================
    CORRECT / INCORRECT COLORS
 ================================= */
@@ -247,4 +275,5 @@ button:hover {
     padding-bottom: 160px;
   }
 }
+
 
