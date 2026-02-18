@@ -108,6 +108,8 @@ h2 {
 
   pointer-events: none;
   z-index: 1;
+   box-sizing: border-box;
+
 }
 
 /* TEXTAREA */
@@ -274,4 +276,5 @@ button:hover {
     padding-bottom: 170px;
   }
 }
+
 
