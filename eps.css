@@ -1,3 +1,11 @@
+/* ===============================
+   GLOBAL
+================================= */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background-color: #0f0f0f;
@@ -41,7 +49,8 @@ body {
 ================================= */
 
 #content {
-  padding: 18px 20px 140px 20px;
+  padding: 18px 20px;
+  padding-bottom: 180px; /* space for fixed bottom bar */
   max-width: 950px;
   margin: auto;
 }
@@ -56,7 +65,7 @@ h2 {
 ================================= */
 
 .line-block {
-  display: block;   /* remove flex */
+  display: block;
   margin: 8px 0;
 }
 
@@ -80,7 +89,6 @@ h2 {
   position: relative;
 }
 
-
 .input-wrap textarea {
   width: 100%;
 
@@ -90,15 +98,15 @@ h2 {
 
   padding: 6px 8px;
 
-  font-size: 14px;
+  font-size: 16px; /* prevents iOS zoom */
   line-height: 1.4;
 
-  height: 28px;        /* single-line base */
+  height: 28px;
   min-height: 28px;
-  max-height: none;    /* IMPORTANT — do not cap growth */
+  max-height: none;
 
-  overflow-y: hidden;  /* prevents scrollbars */
-  resize: none;        /* user cannot manually drag */
+  overflow-y: hidden;
+  resize: none;
 
   box-sizing: border-box;
 
@@ -106,15 +114,11 @@ h2 {
   z-index: 2;
 }
 
-textarea {
-  resize: vertical;
-}
-
-.input-wrap textarea.correct {
+textarea.correct {
   border-color: #00cc66;
 }
 
-.input-wrap textarea.incorrect {
+textarea.incorrect {
   border-color: #cc3333;
 }
 
@@ -157,7 +161,7 @@ textarea {
 }
 
 /* ===============================
-   LOCKED BOTTOM
+   LOCKED BOTTOM BAR
 ================================= */
 
 .bottom-container {
@@ -186,12 +190,12 @@ textarea {
 ================================= */
 
 button {
-  padding: 4px 10px;
+  padding: 6px 12px;
   background-color: #1e1e1e;
   border: 1px solid #444;
   color: white;
   border-radius: 3px;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -218,12 +222,13 @@ button:hover {
     flex-wrap: wrap;
   }
 
-  /* Adjust content padding so bottom bar doesn’t cover */
+  /* Adjust content padding for taller bottom bar */
   #content {
-    padding: 12px 4px 142px 4px;
+    padding: 15px 12px;
+    padding-bottom: 260px; /* enough space when buttons stack */
   }
 
-  /* Make labels slightly smaller */
+  /* Slightly smaller label width */
   .line-label {
     width: 35px;
     font-size: 13px;
@@ -233,24 +238,22 @@ button:hover {
     width: calc(100% - 45px);
   }
 
-  /* Stack bottom buttons vertically */
+  /* Stack bottom controls vertically */
   .ep-nav,
   .trainer-controls {
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
   }
 
-  /* Make buttons full width on mobile */
+  /* Make buttons full width */
   .ep-nav button,
   .trainer-controls button {
     width: 90%;
   }
 
-  /* Slightly larger tap targets */
+  /* Increase tap comfort */
   button {
-    font-size: 14px;
-    padding: 8px 10px;
+    font-size: 15px;
+    padding: 10px 12px;
   }
 }
-
-
