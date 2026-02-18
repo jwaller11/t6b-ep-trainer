@@ -49,8 +49,7 @@ body {
 ================================= */
 
 #content {
-  padding: 18px 20px;
-  padding-bottom: 140px; /* just enough for bottom bar */
+  padding: 18px 20px 120px 20px;
   max-width: 950px;
   margin: auto;
 }
@@ -118,10 +117,23 @@ h2 {
 
   background-color: #111;
   border-top: 1px solid #333;
-
-  padding: 6px 0;
+  padding: 8px 0;
 
   z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+}
+
+/* constrain width to match content */
+.bottom-container-inner {
+  width: 100%;
+  max-width: 950px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
 .ep-nav,
@@ -129,8 +141,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap; /* key fix */
+  gap: 12px;
 }
 
 /* ===============================
@@ -138,12 +149,12 @@ h2 {
 ================================= */
 
 button {
-  padding: 6px 10px;
+  padding: 6px 12px;
   background-color: #1e1e1e;
   border: 1px solid #444;
   color: white;
   border-radius: 3px;
-  font-size: 13px;
+  font-size: 14px;
   cursor: pointer;
 }
 
@@ -152,7 +163,7 @@ button:hover {
 }
 
 /* ===============================
-   MOBILE FIX
+   MOBILE TWEAK
 ================================= */
 
 @media (max-width: 768px) {
@@ -178,18 +189,12 @@ button:hover {
     width: calc(100% - 45px);
   }
 
-  /* Smaller, tighter bottom layout */
-  .ep-nav,
-  .trainer-controls {
-    gap: 6px;
-  }
-
   button {
     font-size: 14px;
     padding: 8px 10px;
   }
 
   #content {
-    padding-bottom: 160px; /* slight mobile adjustment */
+    padding-bottom: 140px;
   }
 }
