@@ -219,4 +219,13 @@ button {
 button:hover {
   background-color: #2a2a2a;
 }
+/* FORCE grading colors to win */
+.input-wrap textarea.correct {
+  border: 1px solid #00cc66 !important;
+}
+
+.input-wrap textarea.incorrect {
+  border: 1px solid #cc3333 !important;
+}
+
 
