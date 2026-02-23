@@ -150,7 +150,11 @@ function buildQueue(proc) {
 
 function render() {
 
+ if (currentMode === "ep" || currentMode === "nwc") {
+  filteredProcedures = allContent.filter(p => p.type === "ep");
+} else {
   filteredProcedures = allContent.filter(p => p.type === currentMode);
+}
 
   const container = document.getElementById("content");
   container.innerHTML = "";
@@ -377,3 +381,4 @@ function bind() {
 
 bind();
 render();
+
