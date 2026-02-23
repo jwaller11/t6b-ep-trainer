@@ -1,7 +1,13 @@
 import { procedures } from "./procedures.js";
+import { briefs } from "./briefs.js";
 
-let currentProcedure = procedures[0];
+const allContent = [...procedures, ...briefs];
+
 let currentMode = "ep";
+let filteredProcedures = [];
+
+let currentProcedure = null;
+
 let trainingMode = "normal";
 let firstLetterMode = false;
 let caseSensitive = false;
@@ -17,10 +23,10 @@ const BASE_HEIGHT_PX = 28;
 
 function normalize(text) {
   let cleaned = (text ?? "")
-    .replace(/\r?\n/g, " ")          // remove line breaks
-    .replace(/[–—]/g, "-")           // normalize dash types
-    .replace(/\u00A0/g, " ")         // remove non-breaking spaces
-    .replace(/\s+/g, " ")            // collapse spaces
+    .replace(/\r?\n/g, " ")
+    .replace(/[–—]/g, "-")
+    .replace(/\u00A0/g, " ")
+    .replace(/\s+/g, " ")
     .trim();
 
   if (!caseSensitive) cleaned = cleaned.toLowerCase();
@@ -72,7 +78,6 @@ function resizeBox(el, correctText = null) {
   el.style.height = "0px";
 
   requestAnimationFrame(() => {
-
     if (firstLetterMode && correctText) {
       const original = el.value;
       el.value = correctText;
@@ -86,7 +91,6 @@ function resizeBox(el, correctText = null) {
     } else {
       el.style.height = el.scrollHeight + "px";
     }
-
   });
 }
 
@@ -95,7 +99,6 @@ function resizeBox(el, correctText = null) {
 ================================= */
 
 function buildQueue(proc) {
-
   const queue = [];
 
   const pushCondition = (text) =>
@@ -105,7 +108,6 @@ function buildQueue(proc) {
     queue.push({ kind: type, text, graded: true });
 
   const pushGroup = (groupType, bullets) => {
-
     queue.push({ kind: "groupHeader", text: groupType.toUpperCase(), graded: false });
 
     bullets.forEach((bulletLines, letterIdx) => {
@@ -148,8 +150,20 @@ function buildQueue(proc) {
 
 function render() {
 
+  filteredProcedures = allContent.filter(p => p.type === currentMode);
+
   const container = document.getElementById("content");
   container.innerHTML = "";
+
+  if (!filteredProcedures.length) {
+    container.innerHTML = "<h2>No items in this mode.</h2>";
+    updateCounter();
+    return;
+  }
+
+  if (!currentProcedure || !filteredProcedures.includes(currentProcedure)) {
+    currentProcedure = filteredProcedures[0];
+  }
 
   const title = document.createElement("h2");
   title.textContent = currentProcedure.title;
@@ -212,18 +226,13 @@ function render() {
     const correctText = currentGradedItems[gradedIdx]?.text ?? "";
 
     if (firstLetterMode) {
-
       ghost.textContent = baseHintString(correctText);
-
       ta.addEventListener("input", () => {
         ghost.textContent = progressiveHint(ta.value, correctText);
         resizeBox(ta, correctText);
       });
-
       resizeBox(ta, correctText);
-
     } else {
-
       resizeBox(ta);
       ta.addEventListener("input", () => resizeBox(ta));
     }
@@ -246,11 +255,9 @@ function render() {
 ================================= */
 
 function check() {
-
   const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
 
   inputs.forEach((input, i) => {
-
     const user = normalize(input.value);
     const correct = normalize(currentGradedItems[i]?.text ?? "");
 
@@ -269,11 +276,9 @@ function reset() {
 }
 
 function showAllAnswers() {
-
   const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
 
   inputs.forEach((input, i) => {
-
     input.value = currentGradedItems[i]?.text ?? "";
     input.classList.add("correct");
 
@@ -292,28 +297,32 @@ function updateCounter() {
   const counter = document.getElementById("epCounter");
   if (!counter) return;
 
-  const index = procedures.indexOf(currentProcedure);
-  counter.textContent = `${index + 1} of ${procedures.length}`;
+  const index = filteredProcedures.indexOf(currentProcedure);
+  counter.textContent = filteredProcedures.length
+    ? `${index + 1} of ${filteredProcedures.length}`
+    : "0 of 0";
 }
 
 function prevEp() {
-  const index = procedures.indexOf(currentProcedure);
+  const index = filteredProcedures.indexOf(currentProcedure);
   if (index > 0) {
-    currentProcedure = procedures[index - 1];
+    currentProcedure = filteredProcedures[index - 1];
     render();
   }
 }
 
 function nextEp() {
-  const index = procedures.indexOf(currentProcedure);
-  if (index < procedures.length - 1) {
-    currentProcedure = procedures[index + 1];
+  const index = filteredProcedures.indexOf(currentProcedure);
+  if (index < filteredProcedures.length - 1) {
+    currentProcedure = filteredProcedures[index + 1];
     render();
   }
 }
 
 function randomEp() {
-  currentProcedure = procedures[Math.floor(Math.random() * procedures.length)];
+  if (!filteredProcedures.length) return;
+  currentProcedure =
+    filteredProcedures[Math.floor(Math.random() * filteredProcedures.length)];
   render();
 }
 
@@ -330,6 +339,21 @@ function bind() {
 
   document.getElementById("nwcMode")?.addEventListener("click", () => {
     currentMode = "nwc";
+    render();
+  });
+
+  document.getElementById("famMode")?.addEventListener("click", () => {
+    currentMode = "fam";
+    render();
+  });
+
+  document.getElementById("inavMode")?.addEventListener("click", () => {
+    currentMode = "inav";
+    render();
+  });
+
+  document.getElementById("formMode")?.addEventListener("click", () => {
+    currentMode = "form";
     render();
   });
 
@@ -353,4 +377,3 @@ function bind() {
 
 bind();
 render();
-
