@@ -6,7 +6,7 @@ export const procedures = [
   ===================================================== */
   {
     id: "abort_start",
-    type: "nwc",
+    type: "ep",
     title: "ABORT START PROCEDURE",
     steps: [
 
@@ -35,7 +35,7 @@ export const procedures = [
   ===================================================== */
   {
     id: "emergency_engine_shutdown_ground",
-    type: "nwc",
+    type: "ep",
     title: "EMERGENCY ENGINE SHUTDOWN ON THE GROUND",
     steps: [
 
@@ -61,7 +61,7 @@ export const procedures = [
   ===================================================== */
   {
     id: "emergency_ground_egress",
-    type: "nwc",
+    type: "ep",
     title: "EMERGENCY GROUND EGRESS",
     steps: [
 
@@ -185,7 +185,7 @@ export const procedures = [
   },
 {
   id: "abort",
-    type: "nwc",
+    type: "ep",
   title: "ABORT",
   steps: [
 
@@ -206,7 +206,7 @@ export const procedures = [
 },
 {
   id: "engine_failure_takeoff",
-    type: "nwc",
+    type: "ep",
   title: "ENGINE FAILURE IMMEDIATELY AFTER TAKEOFF (SUFFICIENT RUNWAY REMAINING STRAIGHT AHEAD)",
   steps: [
 
@@ -251,7 +251,7 @@ export const procedures = [
 },
 {
   id: "engine_failure_flight",
-    type: "nwc",
+    type: "ep",
   title: "ENGINE FAILURE DURING FLIGHT",
   steps: [
 
@@ -332,7 +332,7 @@ export const procedures = [
 },
 {
   id: "immediate_airstart_pmu_norm",
-    type: "nwc",
+    type: "ep",
   title: "IMMEDIATE AIRSTART (PMU NORM)",
   steps: [
 
@@ -426,7 +426,7 @@ export const procedures = [
 },
 {
   id: "uncommanded_power_changes",
-    type: "nwc",
+    type: "ep",
   title: "UNCOMMANDED POWER CHANGES / LOSS OF POWER / UNCOMMANDED PROPELLER FEATHER",
   steps: [
 
@@ -542,7 +542,7 @@ export const procedures = [
 },
 {
   id: "compressor_stalls",
-    type: "nwc",
+    type: "ep",
   title: "COMPRESSOR STALLS",
   steps: [
 
@@ -590,7 +590,7 @@ export const procedures = [
 },
 {
   id: "inadvertent_departure",
-    type: "nwc",
+    type: "ep",
   title: "INADVERTENT DEPARTURE FROM CONTROLLED FLIGHT",
   steps: [
     { type: "action", text: "PCL - IDLE" },
@@ -642,7 +642,7 @@ export const procedures = [
 },
 {
   id: "fire_in_flight",
-    type: "nwc",
+    type: "ep",
   title: "FIRE IN FLIGHT",
   steps: [
     { type: "condition", text: "IF FIRE IS CONFIRMED:" },
@@ -689,7 +689,7 @@ export const procedures = [
 },
 {
   id: "smoke_and_fumes",
-    type: "nwc",
+    type: "ep",
   title: "SMOKE AND FUME ELIMINATION/ELECTRICAL FIRE",
   steps: [
     {
@@ -718,7 +718,7 @@ export const procedures = [
 },
 {
   id: "chip_detector_warning",
-    type: "nwc",
+    type: "ep",
   title: "CHIP DETECTOR WARNING",
   steps: [
 
@@ -742,7 +742,7 @@ export const procedures = [
 },
 {
   id: "oil_system_malfunction",
-    type: "nwc",
+    type: "ep",
   title: "OIL SYSTEM MALFUNCTION OR LOW OIL PRESSURE",
   steps: [
     {
@@ -785,7 +785,7 @@ export const procedures = [
 },
 {
   id: "low_fuel_pressure",
-    type: "nwc",
+    type: "ep",
   title: "LOW FUEL PRESSURE",
   steps: [
     { type: "action", text: "PEL - EXECUTE" },
@@ -814,7 +814,7 @@ export const procedures = [
 },
 {
   id: "high_fuel_flow",
-    type: "nwc",
+    type: "ep",
   title: "HIGH FUEL FLOW",
   steps: [
     { type: "action", text: "PEL - EXECUTE" },
@@ -831,7 +831,7 @@ export const procedures = [
 },
 {
   id: "obogs_failure",
-    type: "nwc",
+    type: "ep",
   title: "OBOGS FAILURE/OVERTEMP/PHYSIOLOGICAL SYMPTOMS",
   steps: [
     {
@@ -900,7 +900,7 @@ export const procedures = [
 },
 {
   id: "eject",
-    type: "nwc",
+    type: "ep",
   title: "EJECT",
   steps: [
     { type: "action", text: "EJECTION HANDLE - PULL (BOTH)" },
@@ -939,7 +939,7 @@ export const procedures = [
 },
 {
   id: "forced_landing",
-    type: "nwc",
+    type: "ep",
   title: "FORCED LANDING",
   steps: [
     {
@@ -1023,7 +1023,7 @@ export const procedures = [
 },
 {
   id: "precautionary_emergency_landing",
-    type: "nwc",
+    type: "ep",
   title: "PRECAUTIONARY EMERGENCY LANDING (PEL)",
   steps: [
     {
@@ -1066,3 +1066,4 @@ export const procedures = [
 }
 
 ];
+
