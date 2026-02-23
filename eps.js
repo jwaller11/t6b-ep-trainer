@@ -8,6 +8,7 @@ let caseSensitive = false;
 let hardIndex = 0;
 
 let currentGradedItems = [];
+let filteredProcedures = [];
 
 const BASE_HEIGHT_PX = 28;
 
@@ -147,7 +148,13 @@ function buildQueue(proc) {
 ================================= */
 
 function render() {
+filteredProcedures = procedures.filter(p => p.type === currentMode);
 
+if (!filteredProcedures.length) return;
+
+if (!filteredProcedures.includes(currentProcedure)) {
+  currentProcedure = filteredProcedures[0];
+}
   const container = document.getElementById("content");
   container.innerHTML = "";
 
@@ -292,28 +299,28 @@ function updateCounter() {
   const counter = document.getElementById("epCounter");
   if (!counter) return;
 
-  const index = procedures.indexOf(currentProcedure);
-  counter.textContent = `${index + 1} of ${procedures.length}`;
+const index = filteredProcedures.indexOf(currentProcedure);
+counter.textContent = `${index + 1} of ${filteredProcedures.length}`;
 }
 
-function prevEp() {
-  const index = procedures.indexOf(currentProcedure);
-  if (index > 0) {
-    currentProcedure = procedures[index - 1];
-    render();
-  }
+const index = filteredProcedures.indexOf(currentProcedure);
+if (index > 0) {
+  currentProcedure = filteredProcedures[index - 1];
+  render();
+}
 }
 
 function nextEp() {
-  const index = procedures.indexOf(currentProcedure);
-  if (index < procedures.length - 1) {
-    currentProcedure = procedures[index + 1];
-    render();
-  }
+const index = filteredProcedures.indexOf(currentProcedure);
+if (index < filteredProcedures.length - 1) {
+  currentProcedure = filteredProcedures[index + 1];
+  render();
+}
 }
 
 function randomEp() {
-  currentProcedure = procedures[Math.floor(Math.random() * procedures.length)];
+ currentProcedure =
+  filteredProcedures[Math.floor(Math.random() * filteredProcedures.length)];
   render();
 }
 
@@ -333,6 +340,21 @@ function bind() {
     render();
   });
 
+   document.getElementById("famMode")?.addEventListener("click", () => {
+  currentMode = "fam";
+  render();
+});
+
+document.getElementById("inavMode")?.addEventListener("click", () => {
+  currentMode = "inav";
+  render();
+});
+
+document.getElementById("formMode")?.addEventListener("click", () => {
+  currentMode = "form";
+  render();
+});
+   
   document.getElementById("firstLetterToggle")?.addEventListener("change", (e) => {
     firstLetterMode = e.target.checked;
     render();
@@ -353,4 +375,5 @@ function bind() {
 
 bind();
 render();
+
 
