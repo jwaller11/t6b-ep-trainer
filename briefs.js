@@ -178,7 +178,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(1) If we are in Out-of-Controlled Flight, we will execute the INADVERTENT DEPARTURE FROM CONTROLLED FLIGHT Emergency Procedure; PCL IDLE, controls neutral, altitude check, recover from unusual attitude (2) OCF can be identified if the aircraft does not respond immediately and in a normal sense to application of flight controls. Airspeed in a steady-state spin will either be stable or it will oscillate above and below a constant airspeed, while the turn needle will be relied upon to indicate direction of rotation
+        "text": "(1) If we are in Out-of-Controlled Flight, we will execute the INADVERTENT DEPARTURE FROM CONTROLLED FLIGHT Emergency Procedure; PCL IDLE, controls neutral, altitude check, recover from unusual attitude (2) OCF can be identified if the aircraft does not respond immediately and in a normal sense to application of flight controls. Airspeed in a steady-state spin will either be stable or it will oscillate above and below a constant airspeed, while the turn needle will be relied upon to indicate direction of rotation"
       },
       {
         "type": "condition",
