@@ -5,11 +5,9 @@ const allContent = [...procedures, ...briefs];
 
 let currentMode = "ep";
 let filteredProcedures = [];
-
 let currentProcedure = null;
 
 let firstLetterMode = false;
-
 let currentGradedItems = [];
 
 const BASE_HEIGHT_PX = 28;
@@ -38,7 +36,6 @@ function isWordChar(ch) {
 
 function isWordStart(text, index) {
   if (!isWordChar(text[index])) return false;
-
   if (index === 0) return true;
 
   const prev = text[index - 1];
@@ -58,16 +55,15 @@ function isWordStart(text, index) {
   );
 }
 
-function firstLetterHintChar(correctText, index) {
+function hintChar(correctText, index) {
   const ch = correctText[index];
 
   if (!isWordChar(ch)) return ch;
-
   return isWordStart(correctText, index) ? ch : "_";
 }
 
 function escapeHtml(ch) {
-  return ch
+  return String(ch)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
@@ -78,17 +74,15 @@ function renderFirstLetterDisplay(display, correctText, userText) {
 
   for (let i = 0; i < correctText.length; i++) {
     const correctCh = correctText[i];
-    const userCh = userText[i];
+    const typedCh = userText[i];
 
-    if (userCh !== undefined) {
-      const userMatches =
-        normalize(userCh) === normalize(correctCh);
-
-      html += `<span class="${userMatches ? "fl-typed" : "fl-typed fl-wrong"}">${escapeHtml(userCh)}</span>`;
+    if (typedCh !== undefined) {
+      const good = normalize(typedCh) === normalize(correctCh);
+      html += `<span class="${good ? "fl-typed" : "fl-typed fl-wrong"}">${escapeHtml(typedCh)}</span>`;
       continue;
     }
 
-    const hint = firstLetterHintChar(correctText, i);
+    const hint = hintChar(correctText, i);
 
     if (hint === " ") {
       html += `<span class="fl-space"> </span>`;
@@ -102,24 +96,65 @@ function renderFirstLetterDisplay(display, correctText, userText) {
   display.innerHTML = html;
 }
 
+function bindFirstLetterTyping(display, hiddenInput, correctText) {
+  const sync = () => {
+    renderFirstLetterDisplay(display, correctText, hiddenInput.value);
+  };
+
+  display.addEventListener("click", () => display.focus());
+
+  display.addEventListener("keydown", (e) => {
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+    let value = hiddenInput.value;
+
+    if (e.key === "Backspace") {
+      e.preventDefault();
+      hiddenInput.value = value.slice(0, -1);
+      sync();
+      return;
+    }
+
+    if (e.key === "Delete") {
+      e.preventDefault();
+      sync();
+      return;
+    }
+
+    if (e.key === "Enter") {
+      e.preventDefault();
+      hiddenInput.value += "\n";
+      sync();
+      return;
+    }
+
+    if (e.key === "Tab") {
+      e.preventDefault();
+      hiddenInput.value += " ";
+      sync();
+      return;
+    }
+
+    if (e.key.length === 1) {
+      e.preventDefault();
+      hiddenInput.value += e.key;
+      sync();
+    }
+  });
+
+  renderFirstLetterDisplay(display, correctText, hiddenInput.value);
+}
+
 /* ===============================
    RESIZE
 ================================= */
 
-function resizeBox(el, correctText = null) {
+function resizeBox(el) {
   if (!el) return;
 
   el.style.height = "0px";
 
   requestAnimationFrame(() => {
-    if (firstLetterMode && correctText) {
-      const original = el.value;
-      el.value = correctText;
-      el.style.height = el.scrollHeight + "px";
-      el.value = original;
-      return;
-    }
-
     if (!el.value.trim()) {
       el.style.height = BASE_HEIGHT_PX + "px";
     } else {
@@ -157,7 +192,6 @@ function buildQueue(proc) {
   };
 
   for (const step of proc.steps) {
-
     if (step.type === "condition") {
       pushCondition(step.text);
       continue;
@@ -183,12 +217,11 @@ function buildQueue(proc) {
 ================================= */
 
 function render() {
-
- if (currentMode === "ep" || currentMode === "nwc") {
-  filteredProcedures = allContent.filter(p => p.type === "ep");
-} else {
-  filteredProcedures = allContent.filter(p => p.type === currentMode);
-}
+  if (currentMode === "ep" || currentMode === "nwc") {
+    filteredProcedures = allContent.filter(p => p.type === "ep");
+  } else {
+    filteredProcedures = allContent.filter(p => p.type === currentMode);
+  }
 
   const container = document.getElementById("content");
   container.innerHTML = "";
@@ -215,7 +248,6 @@ function render() {
   let subLetter = 0;
 
   for (const item of queue) {
-
     if (item.kind === "condition") {
       const cond = document.createElement("div");
       cond.className = "condition-label";
@@ -256,38 +288,34 @@ function render() {
     const wrap = document.createElement("div");
     wrap.className = "input-wrap";
 
-    const ta = document.createElement("textarea");
-    ta.autocomplete = "off";
-    ta.spellcheck = false;
-
     const correctText = currentGradedItems[gradedIdx]?.text ?? "";
 
     if (firstLetterMode) {
       wrap.classList.add("first-letter-wrap");
 
+      const hiddenInput = document.createElement("textarea");
+      hiddenInput.className = "first-letter-hidden-input";
+      hiddenInput.setAttribute("aria-hidden", "true");
+      hiddenInput.tabIndex = -1;
+
       const display = document.createElement("div");
       display.className = "first-letter-display";
       display.tabIndex = 0;
+      display.setAttribute("role", "textbox");
+      display.setAttribute("aria-label", "First letter answer input");
 
-      ta.className = "first-letter-source";
-
-      renderFirstLetterDisplay(display, correctText, ta.value);
-
-      display.addEventListener("click", () => ta.focus());
-      display.addEventListener("focus", () => ta.focus());
-
-      ta.addEventListener("input", () => {
-        renderFirstLetterDisplay(display, correctText, ta.value);
-      });
-
-      ta.addEventListener("focus", () => display.classList.add("focused"));
-      ta.addEventListener("blur", () => display.classList.remove("focused"));
+      bindFirstLetterTyping(display, hiddenInput, correctText);
 
       wrap.appendChild(display);
-      wrap.appendChild(ta);
+      wrap.appendChild(hiddenInput);
     } else {
+      const ta = document.createElement("textarea");
+      ta.autocomplete = "off";
+      ta.spellcheck = false;
+
       resizeBox(ta);
       ta.addEventListener("input", () => resizeBox(ta));
+
       wrap.appendChild(ta);
     }
 
@@ -340,18 +368,19 @@ function showAllAnswers() {
   const inputs = Array.from(document.querySelectorAll(".input-wrap textarea"));
 
   inputs.forEach((input, i) => {
-    input.value = currentGradedItems[i]?.text ?? "";
+    const correctText = currentGradedItems[i]?.text ?? "";
+    input.value = correctText;
     input.classList.add("correct");
     input.classList.remove("incorrect");
 
     const display = input.parentElement.querySelector(".first-letter-display");
     if (display) {
-      renderFirstLetterDisplay(display, currentGradedItems[i]?.text ?? "", input.value);
+      renderFirstLetterDisplay(display, correctText, input.value);
       display.classList.add("correct");
       display.classList.remove("incorrect");
+    } else {
+      resizeBox(input);
     }
-
-    resizeBox(input);
   });
 }
 
@@ -397,7 +426,6 @@ function randomEp() {
 ================================= */
 
 function bind() {
-
   document.getElementById("epMode")?.addEventListener("click", () => {
     currentMode = "ep";
     render();
