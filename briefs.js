@@ -195,23 +195,23 @@ export const briefs = [
       {
         "type": "action",
         "text": "(1) Ejection is never simulated"
-      }
+      },
       {
         "type": "action",
         "text": "(2) Immediate. If impact is imminent with insufficient time for the normal cadence, we will both immediately pull the ejection handle"
-      }
+      },
      {
         "type": "action",
         "text": "(3) Time Critical"
-      }
+      },
       {
         "type": "action",
         "text": "(a) To facilitate proper body position, the call for ejection will normally be a foursecond cadence: ‘EJECT, EJECT, EJECT,’ pull (both) the ejection handle. In the event of an ICS failure, execute three raps on the canopy, pull (both)."
-      }
+      },
        {
         "type": "action",
         "text": "(b) Ensure proper body position: back and musters against the seat, head on the head rest, chin up 10 degrees, feet on the rudder pedals, and elbows in tight toward the body. The minimum recommended altitude for uncontrolled ejection is 6,000 feet AGL, and 2,000 feet AGL for a controlled ejection"
-      }
+      },
       {
         "type": "action",
         "text": "(4) Deliberate. Time permitting, we will execute as many of the CONTROLLED EJECTION checklist steps as possible. The Controlled Ejection Area is defined as the CRP 170 radial at 20 DME (Chapman Ranch) heading 210"
