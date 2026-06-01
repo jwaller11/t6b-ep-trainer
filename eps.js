@@ -27,7 +27,8 @@ function normalize(text) {
 }
 
 /* ===============================
-   FIRST LETTER DISPLAY
+   FIRST LETTER MODE
+   Locked line-break version
 ================================= */
 
 function isWordChar(ch) {
@@ -69,31 +70,89 @@ function escapeHtml(ch) {
     .replace(/>/g, "&gt;");
 }
 
-function renderFirstLetterDisplay(display, correctText, userText) {
-  let html = "";
+function getCharCapacity(display) {
+  const computed = window.getComputedStyle(display);
+  const fontSize = computed.fontSize || "16px";
+  const fontFamily = computed.fontFamily || "monospace";
 
-  for (let i = 0; i < correctText.length; i++) {
-    const correctCh = correctText[i];
-    const typedCh = userText[i];
+  const probe = document.createElement("span");
+  probe.textContent = "0".repeat(100);
+  probe.style.position = "absolute";
+  probe.style.visibility = "hidden";
+  probe.style.whiteSpace = "pre";
+  probe.style.fontFamily = fontFamily;
+  probe.style.fontSize = fontSize;
 
-    if (typedCh !== undefined) {
-      const good = normalize(typedCh) === normalize(correctCh);
-      html += `<span class="${good ? "fl-typed" : "fl-typed fl-wrong"}">${escapeHtml(typedCh)}</span>`;
-      continue;
+  document.body.appendChild(probe);
+  const charWidth = probe.getBoundingClientRect().width / 100;
+  document.body.removeChild(probe);
+
+  const displayWidth = display.clientWidth;
+  const usableWidth = Math.max(1, displayWidth - 18); // padding/border cushion
+  return Math.max(12, Math.floor(usableWidth / charWidth));
+}
+
+function splitIntoLockedLines(text, capacity) {
+  const lines = [];
+  let i = 0;
+
+  while (i < text.length) {
+    let end = Math.min(i + capacity, text.length);
+
+    if (end < text.length) {
+      const chunk = text.slice(i, end);
+      const lastSpace = chunk.lastIndexOf(" ");
+
+      // Prefer wrapping on spaces, but do not create tiny fragments.
+      if (lastSpace > Math.floor(capacity * 0.45)) {
+        end = i + lastSpace + 1;
+      }
     }
 
-    const hint = hintChar(correctText, i);
-
-    if (hint === " ") {
-      html += `<span class="fl-space"> </span>`;
-    } else if (hint === "_") {
-      html += `<span class="fl-blank">_</span>`;
-    } else {
-      html += `<span class="fl-hint">${escapeHtml(hint)}</span>`;
-    }
+    lines.push({ start: i, end });
+    i = end;
   }
 
-  display.innerHTML = html;
+  return lines;
+}
+
+function renderFirstLetterDisplay(display, correctText, userText) {
+  if (!display._lockedLines || !display._lockedCapacity) {
+    const capacity = getCharCapacity(display);
+    display._lockedCapacity = capacity;
+    display._lockedLines = splitIntoLockedLines(correctText, capacity);
+  }
+
+  const parts = [];
+
+  for (const line of display._lockedLines) {
+    let lineHtml = "";
+
+    for (let i = line.start; i < line.end; i++) {
+      const correctCh = correctText[i];
+      const typedCh = userText[i];
+
+      if (typedCh !== undefined) {
+        const good = normalize(typedCh) === normalize(correctCh);
+        lineHtml += `<span class="${good ? "fl-typed" : "fl-typed fl-wrong"}">${escapeHtml(typedCh)}</span>`;
+        continue;
+      }
+
+      const hint = hintChar(correctText, i);
+
+      if (hint === " ") {
+        lineHtml += `<span class="fl-space"> </span>`;
+      } else if (hint === "_") {
+        lineHtml += `<span class="fl-blank">_</span>`;
+      } else {
+        lineHtml += `<span class="fl-hint">${escapeHtml(hint)}</span>`;
+      }
+    }
+
+    parts.push(`<div class="fl-line">${lineHtml}</div>`);
+  }
+
+  display.innerHTML = parts.join("");
 }
 
 function bindFirstLetterTyping(display, hiddenInput, correctText) {
@@ -142,7 +201,8 @@ function bindFirstLetterTyping(display, hiddenInput, correctText) {
     }
   });
 
-  renderFirstLetterDisplay(display, correctText, hiddenInput.value);
+  // Wait one frame so the display has a real width, then lock its line breaks.
+  requestAnimationFrame(sync);
 }
 
 /* ===============================
@@ -192,6 +252,7 @@ function buildQueue(proc) {
   };
 
   for (const step of proc.steps) {
+
     if (step.type === "condition") {
       pushCondition(step.text);
       continue;
@@ -304,10 +365,10 @@ function render() {
       display.setAttribute("role", "textbox");
       display.setAttribute("aria-label", "First letter answer input");
 
-      bindFirstLetterTyping(display, hiddenInput, correctText);
-
       wrap.appendChild(display);
       wrap.appendChild(hiddenInput);
+
+      bindFirstLetterTyping(display, hiddenInput, correctText);
     } else {
       const ta = document.createElement("textarea");
       ta.autocomplete = "off";
