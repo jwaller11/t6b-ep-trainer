@@ -6,7 +6,7 @@ export const briefs = [
     "steps": [
       {
         "type": "condition",
-        "text": "1. Airsickness History"
+        "text": "Airsickness History"
       },
       {
         "type": "action",
@@ -14,7 +14,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "2. Foreign Object Damage"
+        "text": "Foreign Object Damage"
       },
       {
         "type": "action",
@@ -22,7 +22,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "3. IMC Penetration"
+        "text": "IMC Penetration"
       },
       {
         "type": "action",
@@ -30,7 +30,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "4. Approach/Missed Approach"
+        "text": "Approach/Missed Approach"
       },
       {
         "type": "action",
@@ -38,7 +38,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "5. G-Awareness Procedures"
+        "text": "G-Awareness Procedures"
       },
       {
         "type": "action",
@@ -46,7 +46,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "6. Frequencies:"
+        "text": "Frequencies:"
       },
       {
         "type": "action",
@@ -54,7 +54,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "7. Radio Procedures and Discipline:"
+        "text": "Radio Procedures and Discipline:"
       },
       {
         "type": "action",
@@ -62,7 +62,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "8. Change of Control of Aircraft"
+        "text": "Change of Control of Aircraft"
       },
       {
         "type": "action",
@@ -70,7 +70,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "9. Navigational Aids"
+        "text": "Navigational Aids"
       },
       {
         "type": "action",
@@ -78,7 +78,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "10. Clearing Procedures"
+        "text": "Clearing Procedures"
       },
       {
         "type": "action",
@@ -86,7 +86,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "11. Aborts"
+        "text": "Aborts"
       },
       {
         "type": "action",
@@ -94,7 +94,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "12. Divert Fields"
+        "text": "Divert Fields"
       },
       {
         "type": "action",
@@ -102,7 +102,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "13. Minimum And Emergency Fuel"
+        "text": "Minimum And Emergency Fuel"
       },
       {
         "type": "action",
@@ -110,7 +110,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "14. Loss Of Power"
+        "text": "Loss Of Power"
       },
       {
         "type": "action",
@@ -118,7 +118,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "15. Radio Failure/ICS Failure"
+        "text": "Radio Failure/ICS Failure"
       },
       {
         "type": "action",
@@ -126,7 +126,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "16. Unintentional Instrument Flight"
+        "text": "Unintentional Instrument Flight"
       },
       {
         "type": "action",
@@ -134,7 +134,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "17. Loss Of Sight/Lost Wingman"
+        "text": "Loss Of Sight/Lost Wingman"
       },
       {
         "type": "action",
@@ -142,7 +142,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "18. Downed Pilot and Aircraft"
+        "text": "Downed Pilot and Aircraft"
       },
       {
         "type": "action",
@@ -150,7 +150,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "19. Mid-Air/Airborne Damaged Aircraft/Bird Strike"
+        "text": "Mid-Air/Airborne Damaged Aircraft/Bird Strike"
       },
       {
         "type": "action",
@@ -158,7 +158,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "20. OBOGS Malfunctions/Hypoxia Symptoms"
+        "text": "OBOGS Malfunctions/Hypoxia Symptoms"
       },
       {
         "type": "action",
@@ -166,7 +166,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "21. Unsafe Gear"
+        "text": "Unsafe Gear"
       },
       {
         "type": "action",
@@ -174,7 +174,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "22. OCF and Spin Recognition and Recovery"
+        "text": "OCF and Spin Recognition and Recovery"
       },
       {
         "type": "action",
@@ -182,7 +182,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "23. Other Aircraft Emergencies/Simulated Emergencies"
+        "text": "Other Aircraft Emergencies/Simulated Emergencies"
       },
       {
         "type": "action",
@@ -190,7 +190,7 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "24. Ejection"
+        "text": "Ejection"
       },
       {
         "type": "action",
