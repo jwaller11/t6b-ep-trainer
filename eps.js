@@ -42,6 +42,7 @@ function baseHintString(text) {
   let start = true;
 
   for (let ch of text) {
+
     const isAlphaNum = /[A-Za-z0-9]/.test(ch);
 
     if (isAlphaNum) {
@@ -49,23 +50,21 @@ function baseHintString(text) {
       start = false;
     } else {
       out += ch;
-      if (ch === " " || ch === "/" || ch === "-") start = true;
+
+      if (
+        ch === " " ||
+        ch === "/" ||
+        ch === "-" ||
+        ch === "(" ||
+        ch === '"' ||
+        ch === "'"
+      ) {
+        start = true;
+      }
     }
   }
+
   return out;
-}
-
-function progressiveHint(userText, correctText) {
-  const base = baseHintString(correctText);
-  const u = caseSensitive ? userText : userText.toLowerCase();
-  const c = caseSensitive ? correctText : correctText.toLowerCase();
-
-  let result = "";
-  for (let i = 0; i < correctText.length; i++) {
-    if (i < u.length && u[i] === c[i]) result += " ";
-    else result += base[i];
-  }
-  return result;
 }
 
 /* ===============================
@@ -219,30 +218,31 @@ function render() {
       label.textContent = item.label;
     }
 
-    const wrap = document.createElement("div");
-    wrap.className = "input-wrap";
+const wrap = document.createElement("div");
+wrap.className = "input-wrap";
 
-    const ghost = document.createElement("div");
-    ghost.className = "ghost";
+const ta = document.createElement("textarea");
 
-    const ta = document.createElement("textarea");
+const correctText = currentGradedItems[gradedIdx]?.text ?? "";
 
-    const correctText = currentGradedItems[gradedIdx]?.text ?? "";
+if (firstLetterMode) {
 
-    if (firstLetterMode) {
-      ghost.textContent = baseHintString(correctText);
-      ta.addEventListener("input", () => {
-        ghost.textContent = progressiveHint(ta.value, correctText);
-        resizeBox(ta, correctText);
-      });
-      resizeBox(ta, correctText);
-    } else {
-      resizeBox(ta);
-      ta.addEventListener("input", () => resizeBox(ta));
-    }
+  ta.placeholder = baseHintString(correctText);
 
-    wrap.appendChild(ghost);
-    wrap.appendChild(ta);
+  ta.addEventListener("input", () => {
+    resizeBox(ta, correctText);
+  });
+
+  resizeBox(ta, correctText);
+
+} else {
+
+  resizeBox(ta);
+
+  ta.addEventListener("input", () => resizeBox(ta));
+}
+
+wrap.appendChild(ta);
 
     block.appendChild(label);
     block.appendChild(wrap);
@@ -285,9 +285,6 @@ function showAllAnswers() {
   inputs.forEach((input, i) => {
     input.value = currentGradedItems[i]?.text ?? "";
     input.classList.add("correct");
-
-    const ghost = input.parentElement.querySelector(".ghost");
-    if (ghost) ghost.textContent = "";
 
     resizeBox(input);
   });
