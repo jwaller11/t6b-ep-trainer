@@ -8,10 +8,7 @@ let filteredProcedures = [];
 
 let currentProcedure = null;
 
-let trainingMode = "normal";
 let firstLetterMode = false;
-let caseSensitive = false;
-let hardIndex = 0;
 
 let currentGradedItems = [];
 
@@ -22,15 +19,13 @@ const BASE_HEIGHT_PX = 28;
 ================================= */
 
 function normalize(text) {
-  let cleaned = (text ?? "")
+  return (text ?? "")
     .replace(/\r?\n/g, " ")
     .replace(/[–—]/g, "-")
     .replace(/\u00A0/g, " ")
     .replace(/\s+/g, " ")
-    .trim();
-
-  if (!caseSensitive) cleaned = cleaned.toLowerCase();
-  return cleaned;
+    .trim()
+    .toLowerCase();
 }
 
 /* ===============================
@@ -41,8 +36,7 @@ function baseHintString(text) {
   let out = "";
   let start = true;
 
-  for (let ch of text) {
-
+  for (let ch of text ?? "") {
     const isAlphaNum = /[A-Za-z0-9]/.test(ch);
 
     if (isAlphaNum) {
@@ -56,8 +50,13 @@ function baseHintString(text) {
         ch === "/" ||
         ch === "-" ||
         ch === "(" ||
-        ch === '"' ||
-        ch === "'"
+        ch === ")" ||
+        ch === "\"" ||
+        ch === "'" ||
+        ch === "‘" ||
+        ch === "’" ||
+        ch === "“" ||
+        ch === "”"
       ) {
         start = true;
       }
@@ -218,31 +217,30 @@ function render() {
       label.textContent = item.label;
     }
 
-const wrap = document.createElement("div");
-wrap.className = "input-wrap";
+    const wrap = document.createElement("div");
+    wrap.className = "input-wrap";
 
-const ta = document.createElement("textarea");
+    const ta = document.createElement("textarea");
+    const correctText = currentGradedItems[gradedIdx]?.text ?? "";
 
-const correctText = currentGradedItems[gradedIdx]?.text ?? "";
+    ta.autocomplete = "off";
+    ta.spellcheck = false;
 
-if (firstLetterMode) {
+    if (firstLetterMode) {
+      ta.classList.add("first-letter-textarea");
+      ta.placeholder = baseHintString(correctText);
 
-  ta.placeholder = baseHintString(correctText);
+      ta.addEventListener("input", () => {
+        resizeBox(ta, correctText);
+      });
 
-  ta.addEventListener("input", () => {
-    resizeBox(ta, correctText);
-  });
+      resizeBox(ta, correctText);
+    } else {
+      resizeBox(ta);
+      ta.addEventListener("input", () => resizeBox(ta));
+    }
 
-  resizeBox(ta, correctText);
-
-} else {
-
-  resizeBox(ta);
-
-  ta.addEventListener("input", () => resizeBox(ta));
-}
-
-wrap.appendChild(ta);
+    wrap.appendChild(ta);
 
     block.appendChild(label);
     block.appendChild(wrap);
@@ -363,10 +361,6 @@ function bind() {
     render();
   });
 
-  document.getElementById("caseToggle")?.addEventListener("change", (e) => {
-    caseSensitive = e.target.checked;
-  });
-
   document.getElementById("checkBtn")?.addEventListener("click", check);
   document.getElementById("allBtn")?.addEventListener("click", showAllAnswers);
   document.getElementById("resetBtn")?.addEventListener("click", reset);
@@ -378,4 +372,3 @@ function bind() {
 
 bind();
 render();
-
