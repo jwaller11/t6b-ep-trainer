@@ -74,7 +74,7 @@ h2 {
 }
 
 /* ==================================================
-   INPUT AREA (FINAL STABLE VERSION)
+   NORMAL INPUT AREA
 ================================================== */
 
 .input-wrap {
@@ -98,48 +98,97 @@ h2 {
 
   overflow-y: hidden;
   resize: none;
-
   box-sizing: border-box;
-  position: relative;
-  z-index: 2;
 
   caret-color: white;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
+/* Old overlay ghost layer is no longer used. */
 .ghost {
   display: none !important;
 }
 
-.input-wrap textarea {
+/* ==================================================
+   FIRST LETTER MODE
+================================================== */
+
+.first-letter-wrap {
+  position: relative;
   width: 100%;
+}
+
+/* Hidden textarea stores the actual typed answer. */
+.first-letter-source {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.first-letter-display {
+  width: 100%;
+  min-height: 72px;
   box-sizing: border-box;
-  font-family: monospace;
+  border: 1px solid #444;
+  padding: 10px;
+
+  background-color: transparent;
+  color: white;
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 16px;
+  line-height: 1.45;
+
   white-space: pre-wrap;
-  overflow-wrap: break-word;
-  resize: none;
+  overflow-wrap: anywhere;
+  cursor: text;
 }
 
-.input-wrap textarea::placeholder {
+.first-letter-display.focused {
+  outline: 1px solid #777;
+}
+
+.first-letter-display.correct {
+  border-color: #00cc66 !important;
+}
+
+.first-letter-display.incorrect {
+  border-color: #cc3333 !important;
+}
+
+.fl-typed {
+  color: white;
+}
+
+.fl-wrong {
+  color: #ff6666;
+  text-decoration: underline;
+}
+
+.fl-hint,
+.fl-blank {
   opacity: 0.45;
-  white-space: pre-wrap;
 }
 
-.first-letter-textarea {
-  font-family: monospace;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
+.fl-space {
+  white-space: pre;
 }
 
 /* ==================================================
    CORRECT / INCORRECT
 ================================================== */
 
-.editable.correct {
-  border-color: #00cc66;
+.input-wrap textarea.correct {
+  border: 1px solid #00cc66 !important;
 }
 
-.editable.incorrect {
-  border-color: #cc3333;
+.input-wrap textarea.incorrect {
+  border: 1px solid #cc3333 !important;
 }
 
 /* ==================================================
@@ -219,13 +268,3 @@ button {
 button:hover {
   background-color: #2a2a2a;
 }
-/* FORCE grading colors to win */
-.input-wrap textarea.correct {
-  border: 1px solid #00cc66 !important;
-}
-
-.input-wrap textarea.incorrect {
-  border: 1px solid #cc3333 !important;
-}
-
-
