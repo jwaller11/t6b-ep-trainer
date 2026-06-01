@@ -68,10 +68,10 @@ h2 {
 
 .line-label {
   width: 40px;
+  flex: 0 0 40px;
   font-weight: bold;
   font-size: 14px;
   margin-top: 6px;
-  flex: 0 0 40px;
 }
 
 /* ==================================================
@@ -112,7 +112,7 @@ h2 {
 }
 
 /* ==================================================
-   FIRST LETTER MODE — CELL LOCKED VERSION
+   FIRST LETTER MODE — LOCKED LINES
 ================================================== */
 
 .first-letter-wrap {
@@ -144,15 +144,11 @@ h2 {
   background-color: transparent;
   color: white;
 
-  font-family: "Courier New", Courier, monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 16px;
   line-height: 1.4;
   font-variant-ligatures: none;
   letter-spacing: 0;
-
-  white-space: normal;
-  overflow-wrap: normal;
-  word-break: normal;
 
   cursor: text;
 }
@@ -170,21 +166,9 @@ h2 {
   border-color: #cc3333 !important;
 }
 
-/* Every character is one fixed cell.
-   This prevents typed words from reflowing differently than underscores. */
-.fl-typed,
-.fl-wrong,
-.fl-hint,
-.fl-blank,
-.fl-space {
-  display: inline-block;
-  width: 1ch;
-  min-width: 1ch;
-  max-width: 1ch;
+.fl-line {
   white-space: pre;
-  text-align: center;
-  vertical-align: baseline;
-  box-sizing: content-box;
+  height: 1.4em;
 }
 
 .fl-typed {
@@ -201,6 +185,10 @@ h2 {
 .fl-blank {
   color: white;
   opacity: 0.35;
+}
+
+.fl-space {
+  white-space: pre;
 }
 
 /* ==================================================
