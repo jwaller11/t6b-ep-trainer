@@ -335,16 +335,64 @@ function render() {
     const label = document.createElement("div");
     label.className = "line-label";
 
-    if (item.kind === "action") {
-      label.textContent = `${actionNum}.`;
-      actionNum++;
-      subLetter = 0;
-    } else if (item.kind === "actionSub") {
-      label.textContent = String.fromCharCode(97 + subLetter) + ".";
-      subLetter++;
-    } else if (item.label) {
-      label.textContent = item.label;
+   if (item.kind === "action") {
+
+  // Brief modes use embedded numbering
+  if (
+    currentMode === "fam" ||
+    currentMode === "inav" ||
+    currentMode === "form"
+  ) {
+
+    const match = item.text.match(/^\((\d+|[a-zA-Z])\)/);
+
+    if (match) {
+      label.textContent = `(${match[1]})`;
+    } else {
+      label.textContent = "";
+      label.style.width = "10px";
     }
+
+  } else {
+
+    // EP / NWC normal numbering
+    label.textContent = `${actionNum}.`;
+    actionNum++;
+    subLetter = 0;
+  }
+
+} else if (item.kind === "actionSub") {
+
+  if (
+    currentMode === "fam" ||
+    currentMode === "inav" ||
+    currentMode === "form"
+  ) {
+
+    const match = item.text.match(/^\((\d+|[a-zA-Z])\)/);
+
+    if (match) {
+      label.textContent = `(${match[1]})`;
+    } else {
+      label.textContent = "";
+      label.style.width = "10px";
+    }
+
+  } else {
+
+    label.textContent =
+      String.fromCharCode(97 + subLetter) + ".";
+
+    subLetter++;
+  }
+
+} else if (item.label) {
+
+  label.textContent = item.label;
+}
+     if (label.textContent === "") {
+  label.style.width = "10px";
+}
 
     const wrap = document.createElement("div");
     wrap.className = "input-wrap";
