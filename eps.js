@@ -29,41 +29,77 @@ function normalize(text) {
 }
 
 /* ===============================
-   FIRST LETTER
+   FIRST LETTER DISPLAY
 ================================= */
 
-function baseHintString(text) {
-  let out = "";
-  let start = true;
+function isWordChar(ch) {
+  return /[A-Za-z0-9]/.test(ch);
+}
 
-  for (let ch of text ?? "") {
-    const isAlphaNum = /[A-Za-z0-9]/.test(ch);
+function isWordStart(text, index) {
+  if (!isWordChar(text[index])) return false;
 
-    if (isAlphaNum) {
-      out += start ? ch : "_";
-      start = false;
+  if (index === 0) return true;
+
+  const prev = text[index - 1];
+
+  return (
+    prev === " " ||
+    prev === "/" ||
+    prev === "-" ||
+    prev === "(" ||
+    prev === ")" ||
+    prev === '"' ||
+    prev === "'" ||
+    prev === "‘" ||
+    prev === "’" ||
+    prev === "“" ||
+    prev === "”"
+  );
+}
+
+function firstLetterHintChar(correctText, index) {
+  const ch = correctText[index];
+
+  if (!isWordChar(ch)) return ch;
+
+  return isWordStart(correctText, index) ? ch : "_";
+}
+
+function escapeHtml(ch) {
+  return ch
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function renderFirstLetterDisplay(display, correctText, userText) {
+  let html = "";
+
+  for (let i = 0; i < correctText.length; i++) {
+    const correctCh = correctText[i];
+    const userCh = userText[i];
+
+    if (userCh !== undefined) {
+      const userMatches =
+        normalize(userCh) === normalize(correctCh);
+
+      html += `<span class="${userMatches ? "fl-typed" : "fl-typed fl-wrong"}">${escapeHtml(userCh)}</span>`;
+      continue;
+    }
+
+    const hint = firstLetterHintChar(correctText, i);
+
+    if (hint === " ") {
+      html += `<span class="fl-space"> </span>`;
+    } else if (hint === "_") {
+      html += `<span class="fl-blank">_</span>`;
     } else {
-      out += ch;
-
-      if (
-        ch === " " ||
-        ch === "/" ||
-        ch === "-" ||
-        ch === "(" ||
-        ch === ")" ||
-        ch === "\"" ||
-        ch === "'" ||
-        ch === "‘" ||
-        ch === "’" ||
-        ch === "“" ||
-        ch === "”"
-      ) {
-        start = true;
-      }
+      html += `<span class="fl-hint">${escapeHtml(hint)}</span>`;
     }
   }
 
-  return out;
+  display.innerHTML = html;
 }
 
 /* ===============================
@@ -221,26 +257,39 @@ function render() {
     wrap.className = "input-wrap";
 
     const ta = document.createElement("textarea");
-    const correctText = currentGradedItems[gradedIdx]?.text ?? "";
-
     ta.autocomplete = "off";
     ta.spellcheck = false;
 
+    const correctText = currentGradedItems[gradedIdx]?.text ?? "";
+
     if (firstLetterMode) {
-      ta.classList.add("first-letter-textarea");
-      ta.placeholder = baseHintString(correctText);
+      wrap.classList.add("first-letter-wrap");
+
+      const display = document.createElement("div");
+      display.className = "first-letter-display";
+      display.tabIndex = 0;
+
+      ta.className = "first-letter-source";
+
+      renderFirstLetterDisplay(display, correctText, ta.value);
+
+      display.addEventListener("click", () => ta.focus());
+      display.addEventListener("focus", () => ta.focus());
 
       ta.addEventListener("input", () => {
-        resizeBox(ta, correctText);
+        renderFirstLetterDisplay(display, correctText, ta.value);
       });
 
-      resizeBox(ta, correctText);
+      ta.addEventListener("focus", () => display.classList.add("focused"));
+      ta.addEventListener("blur", () => display.classList.remove("focused"));
+
+      wrap.appendChild(display);
+      wrap.appendChild(ta);
     } else {
       resizeBox(ta);
       ta.addEventListener("input", () => resizeBox(ta));
+      wrap.appendChild(ta);
     }
-
-    wrap.appendChild(ta);
 
     block.appendChild(label);
     block.appendChild(wrap);
@@ -263,12 +312,22 @@ function check() {
     const user = normalize(input.value);
     const correct = normalize(currentGradedItems[i]?.text ?? "");
 
+    const display = input.parentElement.querySelector(".first-letter-display");
+
     if (user === correct) {
       input.classList.add("correct");
       input.classList.remove("incorrect");
+      if (display) {
+        display.classList.add("correct");
+        display.classList.remove("incorrect");
+      }
     } else {
       input.classList.add("incorrect");
       input.classList.remove("correct");
+      if (display) {
+        display.classList.add("incorrect");
+        display.classList.remove("correct");
+      }
     }
   });
 }
@@ -283,6 +342,14 @@ function showAllAnswers() {
   inputs.forEach((input, i) => {
     input.value = currentGradedItems[i]?.text ?? "";
     input.classList.add("correct");
+    input.classList.remove("incorrect");
+
+    const display = input.parentElement.querySelector(".first-letter-display");
+    if (display) {
+      renderFirstLetterDisplay(display, currentGradedItems[i]?.text ?? "", input.value);
+      display.classList.add("correct");
+      display.classList.remove("incorrect");
+    }
 
     resizeBox(input);
   });
