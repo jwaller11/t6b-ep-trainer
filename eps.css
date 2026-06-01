@@ -105,7 +105,6 @@ h2 {
   overflow-wrap: break-word;
 }
 
-/* Old overlay ghost layer is no longer used. */
 .ghost {
   display: none !important;
 }
@@ -119,15 +118,17 @@ h2 {
   width: 100%;
 }
 
-/* Hidden textarea stores the actual typed answer. */
-.first-letter-source {
-  position: fixed;
-  left: -9999px;
-  top: -9999px;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
+.first-letter-hidden-input {
+  position: fixed !important;
+  left: -99999px !important;
+  top: -99999px !important;
+  width: 1px !important;
+  height: 1px !important;
+  min-height: 1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .first-letter-display {
@@ -135,20 +136,21 @@ h2 {
   min-height: 72px;
   box-sizing: border-box;
   border: 1px solid #444;
-  padding: 10px;
+  padding: 6px 8px;
 
   background-color: transparent;
   color: white;
 
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: 16px;
-  line-height: 1.45;
+  line-height: 1.4;
 
   white-space: pre-wrap;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
   cursor: text;
 }
 
+.first-letter-display:focus,
 .first-letter-display.focused {
   outline: 1px solid #777;
 }
@@ -163,6 +165,7 @@ h2 {
 
 .fl-typed {
   color: white;
+  opacity: 1;
 }
 
 .fl-wrong {
@@ -172,7 +175,8 @@ h2 {
 
 .fl-hint,
 .fl-blank {
-  opacity: 0.45;
+  color: white;
+  opacity: 0.35;
 }
 
 .fl-space {
