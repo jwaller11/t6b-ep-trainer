@@ -247,7 +247,8 @@ export const briefs = [
       {
         "type": "action",
         "text": "(2) In the event of an actual malfunction, the pilot recognizing the malfunction will call it out over the ICS. The flying pilot will execute any applicable ‘critical action’ procedures. The non-flying pilot will break out the PCL and review both critical and non-critical action items, as well as all notes, warnings, and cautions. Time permitting, we will get dual concurrence prior to moving the PCL to OFF, pulling the firewall shut-off handle, or switching the PMU to OFF."
-      {
+      },
+        {
         "type": "action",
         "text": "(3) In the event of a simulated power loss, the IP will initiate by stating, ‘I HAVE THE PCL, SIMULATED’, manipulate the PCL as required to simulate the power loss and set 4- 6 percent torque upon hearing the SNA/IUT verbalize ‘Simulated PCL–OFF.’ In all cases, the flying pilot retains control of the aircraft and may utilize power as necessary (4) For all simulated malfunctions, the SNA/IUT will maintain control of the aircraft and recite the appropriate procedure, moving the landing gear and flap handles as appropriate. Do not move any other switches or handles in a simulated scenario"
       },
