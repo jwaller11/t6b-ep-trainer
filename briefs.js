@@ -66,7 +66,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(1) We will use a positive, three-way exchange of controls with emphasis on the word ‘CONTROLS’. In the event of an ICS failure, we will use the ‘Push-to-Pass, Shake-to-Take’ method of control transfer with the non-flying pilot showing his or her hands for verification. If in doubt of who has control of the aircraft, query the other pilot. IP input does not constitute a change of controls unless there is an ICS failure (2) Transfer of aircraft controls includes control of the FMS, UFCP and radios. The nonflying pilot may assist or assume control of the FMS, UFCP and radios as directed"
+        "text": "(1) We will use a positive, three-way exchange of controls with emphasis on the word ‘CONTROLS’. In the event of an ICS failure, we will use the ‘Push-to-Pass, Shake-to-Take’ method of control transfer with the non-flying pilot showing his or her hands for verification. If in doubt of who has control of the aircraft, query the other pilot. IP input does not constitute a change of controls unless there is an ICS failure"
       },
       {
         "type": "action",
@@ -118,7 +118,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(1) If we have an engine failure shortly after take-off, we will execute the ENGINE FAILURE IMMEDIATELY AFTER TAKEOFF emergency procedure, being mindful of aircraft configuration, energy state, and runway length remaining. If insufficient runway length remains to land straight ahead, we will eject (2) If we have an engine failure elsewhere, we will execute the ENGINE FAILURE DURING FLIGHT emergency procedure. If we are unable to intercept an ELP for a suitable landing site, we will eject"
+        "text": "(1) If we have an engine failure shortly after take-off, we will execute the ENGINE FAILURE IMMEDIATELY AFTER TAKEOFF emergency procedure, being mindful of aircraft configuration, energy state, and runway length remaining. If insufficient runway length remains to land straight ahead, we will eject"
       },
       {
         "type": "action",
