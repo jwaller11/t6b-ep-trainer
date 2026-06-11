@@ -3,6 +3,65 @@ import { briefs } from "./briefs.js";
 
 const allContent = [...procedures, ...briefs];
 
+/* ===============================
+   BRIEF PAGE SPLITTER
+================================= */
+
+function isBriefMode(mode) {
+  return mode === "fam" || mode === "inav" || mode === "form";
+}
+
+function splitBriefIntoPages(brief) {
+  const pages = [];
+  let currentPage = null;
+
+  for (const step of brief.steps) {
+    if (step.type === "condition") {
+      if (currentPage) pages.push(currentPage);
+
+      currentPage = {
+        id: `${brief.id}_${pages.length + 1}`,
+        type: brief.type,
+        title: step.text,
+        parentTitle: brief.title,
+        steps: [step]
+      };
+
+      continue;
+    }
+
+    if (!currentPage) {
+      currentPage = {
+        id: `${brief.id}_${pages.length + 1}`,
+        type: brief.type,
+        title: brief.title,
+        parentTitle: brief.title,
+        steps: []
+      };
+    }
+
+    currentPage.steps.push(step);
+  }
+
+  if (currentPage) pages.push(currentPage);
+
+  return pages;
+}
+
+function getModeContent(mode) {
+  if (mode === "ep" || mode === "nwc") {
+    return allContent.filter(p => p.type === "ep");
+  }
+
+  if (isBriefMode(mode)) {
+    return allContent
+      .filter(p => p.type === mode)
+      .flatMap(splitBriefIntoPages);
+  }
+
+  return allContent.filter(p => p.type === mode);
+}
+
 let currentMode = "ep";
 let filteredProcedures = [];
 let currentProcedure = null;
@@ -254,7 +313,7 @@ function buildQueue(proc) {
   for (const step of proc.steps) {
 
     if (step.type === "condition") {
-      pushCondition(step.text);
+      if (!proc.parentTitle) pushCondition(step.text);
       continue;
     }
 
@@ -278,11 +337,7 @@ function buildQueue(proc) {
 ================================= */
 
 function render() {
-  if (currentMode === "ep" || currentMode === "nwc") {
-    filteredProcedures = allContent.filter(p => p.type === "ep");
-  } else {
-    filteredProcedures = allContent.filter(p => p.type === currentMode);
-  }
+  filteredProcedures = getModeContent(currentMode);
 
   const container = document.getElementById("content");
   container.innerHTML = "";
@@ -293,12 +348,21 @@ function render() {
     return;
   }
 
-  if (!currentProcedure || !filteredProcedures.includes(currentProcedure)) {
+  if (!currentProcedure) {
     currentProcedure = filteredProcedures[0];
+  } else {
+    const sameProcedure = filteredProcedures.find(p => p.id === currentProcedure.id);
+    currentProcedure = sameProcedure ?? filteredProcedures[0];
   }
 
   const title = document.createElement("h2");
-  title.textContent = currentProcedure.title;
+
+  if (currentProcedure.parentTitle) {
+    title.textContent = `${currentProcedure.parentTitle} — ${currentProcedure.title}`;
+  } else {
+    title.textContent = currentProcedure.title;
+  }
+
   container.appendChild(title);
 
   const queue = buildQueue(currentProcedure);
@@ -501,14 +565,14 @@ function updateCounter() {
   const counter = document.getElementById("epCounter");
   if (!counter) return;
 
-  const index = filteredProcedures.indexOf(currentProcedure);
+  const index = filteredProcedures.findIndex(p => p.id === currentProcedure?.id);
   counter.textContent = filteredProcedures.length
     ? `${index + 1} of ${filteredProcedures.length}`
     : "0 of 0";
 }
 
 function prevEp() {
-  const index = filteredProcedures.indexOf(currentProcedure);
+  const index = filteredProcedures.findIndex(p => p.id === currentProcedure?.id);
   if (index > 0) {
     currentProcedure = filteredProcedures[index - 1];
     render();
@@ -516,7 +580,7 @@ function prevEp() {
 }
 
 function nextEp() {
-  const index = filteredProcedures.indexOf(currentProcedure);
+  const index = filteredProcedures.findIndex(p => p.id === currentProcedure?.id);
   if (index < filteredProcedures.length - 1) {
     currentProcedure = filteredProcedures[index + 1];
     render();
@@ -537,26 +601,31 @@ function randomEp() {
 function bind() {
   document.getElementById("epMode")?.addEventListener("click", () => {
     currentMode = "ep";
+    currentProcedure = null;
     render();
   });
 
   document.getElementById("nwcMode")?.addEventListener("click", () => {
     currentMode = "nwc";
+    currentProcedure = null;
     render();
   });
 
   document.getElementById("famMode")?.addEventListener("click", () => {
     currentMode = "fam";
+    currentProcedure = null;
     render();
   });
 
   document.getElementById("inavMode")?.addEventListener("click", () => {
     currentMode = "inav";
+    currentProcedure = null;
     render();
   });
 
   document.getElementById("formMode")?.addEventListener("click", () => {
     currentMode = "form";
+    currentProcedure = null;
     render();
   });
 
