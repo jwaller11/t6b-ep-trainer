@@ -321,11 +321,11 @@ function buildQueue(proc) {
       continue;
     }
 
-   if (currentMode === "nwc") {
-     if (step.type === "noteGroup") pushNwcGroup("note", step.bullets);
-     if (step.type === "warningGroup") pushNwcGroup("warning", step.bullets);
-     if (step.type === "cautionGroup") pushNwcGroup("caution", step.bullets);
-   }
+ if (currentMode === "nwc") {
+  if (step.type === "noteGroup") pushNwcGroup("note", step.bullets);
+  if (step.type === "warningGroup") pushNwcGroup("warning", step.bullets);
+  if (step.type === "cautionGroup") pushNwcGroup("caution", step.bullets);
+  }
 
   return queue;
 }
