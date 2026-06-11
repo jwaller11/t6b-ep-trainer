@@ -288,6 +288,7 @@ function resizeBox(el) {
 
 function buildQueue(proc) {
   const queue = [];
+  let nwcNum = 1;
 
   const pushCondition = (text) =>
     queue.push({ kind: "condition", text, graded: false });
@@ -295,18 +296,16 @@ function buildQueue(proc) {
   const pushAction = (type, text) =>
     queue.push({ kind: type, text, graded: true });
 
-  const pushGroup = (groupType, bullets) => {
-    queue.push({ kind: "groupHeader", text: groupType.toUpperCase(), graded: false });
-
-    bullets.forEach((bulletLines, letterIdx) => {
-      bulletLines.forEach((line, lineIdx) => {
-        queue.push({
-          kind: groupType,
-          label: String.fromCharCode(65 + letterIdx) + (lineIdx + 1) + ".",
-          text: line,
-          graded: true
-        });
+  const pushNwcGroup = (groupType, bullets) => {
+    bullets.forEach((bulletLines) => {
+      queue.push({
+        kind: groupType,
+        label: `${nwcNum} ${groupType.toUpperCase()}:`,
+        text: bulletLines.join(" "),
+        graded: true
       });
+
+      nwcNum++;
     });
   };
 
@@ -322,11 +321,9 @@ function buildQueue(proc) {
       continue;
     }
 
-    if (currentMode === "nwc") {
-      if (step.type === "noteGroup") pushGroup("note", step.bullets);
-      if (step.type === "warningGroup") pushGroup("warning", step.bullets);
-      if (step.type === "cautionGroup") pushGroup("caution", step.bullets);
-    }
+    if (step.type === "noteGroup") pushNwcGroup("note", step.bullets);
+    if (step.type === "warningGroup") pushNwcGroup("warning", step.bullets);
+    if (step.type === "cautionGroup") pushNwcGroup("caution", step.bullets);
   }
 
   return queue;
@@ -399,64 +396,70 @@ function render() {
     const label = document.createElement("div");
     label.className = "line-label";
 
-   if (item.kind === "action") {
+    if (item.label) {
 
-  // Brief modes use embedded numbering
-  if (
-    currentMode === "fam" ||
-    currentMode === "inav" ||
-    currentMode === "form"
-  ) {
+      label.textContent = item.label;
+      label.style.width = "95px";
+      label.style.flex = "0 0 95px";
 
-    const match = item.text.match(/^\((\d+|[a-zA-Z])\)/);
+    } else if (item.kind === "action") {
 
-    if (match) {
-      label.textContent = `(${match[1]})`;
-    } else {
-      label.textContent = "";
-      label.style.width = "10px";
+      // Brief modes use embedded numbering like (1), (a), etc.
+      if (
+        currentMode === "fam" ||
+        currentMode === "inav" ||
+        currentMode === "form"
+      ) {
+
+        const match = item.text.match(/^\((\d+|[a-zA-Z])\)/);
+
+        if (match) {
+          label.textContent = `(${match[1]})`;
+        } else {
+          label.textContent = "";
+          label.style.width = "10px";
+          label.style.flex = "0 0 10px";
+        }
+
+      } else {
+
+        // EP actions have their own separate count.
+        label.textContent = `${actionNum}.`;
+        actionNum++;
+        subLetter = 0;
+      }
+
+    } else if (item.kind === "actionSub") {
+
+      if (
+        currentMode === "fam" ||
+        currentMode === "inav" ||
+        currentMode === "form"
+      ) {
+
+        const match = item.text.match(/^\((\d+|[a-zA-Z])\)/);
+
+        if (match) {
+          label.textContent = `(${match[1]})`;
+        } else {
+          label.textContent = "";
+          label.style.width = "10px";
+          label.style.flex = "0 0 10px";
+        }
+
+      } else {
+
+        label.textContent =
+          String.fromCharCode(97 + subLetter) + ".";
+
+        subLetter++;
+      }
     }
 
-  } else {
-
-    // EP / NWC normal numbering
-    label.textContent = `${actionNum}.`;
-    actionNum++;
-    subLetter = 0;
-  }
-
-} else if (item.kind === "actionSub") {
-
-  if (
-    currentMode === "fam" ||
-    currentMode === "inav" ||
-    currentMode === "form"
-  ) {
-
-    const match = item.text.match(/^\((\d+|[a-zA-Z])\)/);
-
-    if (match) {
-      label.textContent = `(${match[1]})`;
-    } else {
-      label.textContent = "";
+    if (label.textContent === "") {
       label.style.width = "10px";
+      label.style.flex = "0 0 10px";
     }
-
-  } else {
-
-    label.textContent =
-      String.fromCharCode(97 + subLetter) + ".";
-
-    subLetter++;
-  }
-
-} else if (item.label) {
-
-  label.textContent = item.label;
-}
-     if (label.textContent === "") {
-  label.style.width = "10px";
-}
 
     const wrap = document.createElement("div");
     wrap.className = "input-wrap";
