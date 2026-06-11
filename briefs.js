@@ -42,7 +42,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "We will conduct a G-Ex prior to conducting any maneuvers requiring greater than three Gs, and preface all maneuvers with ‘Gs coming on, NOW, NOW, NOW.’ Either pilot experiencing gray-out conditions must immediately call ‘Knock-it-Off’ over the ICS and a contact unusual attitude must be used to recover the aircraft. In the event either pilot experiences a GLOC, the training portion of the flight will be terminated, and the IP will recover the aircraft to a suitable airfield"
+        "text": "We will conduct a G-Ex prior to conducting any maneuvers requiring greater than three Gs, and preface all maneuvers with 'Gs coming on, NOW, NOW, NOW.’ Either pilot experiencing gray-out conditions must immediately call 'Knock-it-Off’ over the ICS and a contact unusual attitude must be used to recover the aircraft. In the event either pilot experiences a GLOC, the training portion of the flight will be terminated, and the IP will recover the aircraft to a suitable airfield"
       },
       {
         "type": "condition",
@@ -66,11 +66,11 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(1) We will use a positive, three-way exchange of controls with emphasis on the word ‘CONTROLS’. In the event of an ICS failure, we will use the ‘Push-to-Pass, Shake-to-Take’ method of control transfer with the non-flying pilot showing his or her hands for verification. If in doubt of who has control of the aircraft, query the other pilot. IP input does not constitute a change of controls unless there is an ICS failure"
+        "text": "(1) We will use a positive, three-way exchange of controls with emphasis on the word 'CONTROLS’. In the event of an ICS failure, we will use the 'Push-to-Pass, Shake-to-Take’ method of control transfer with the non-flying pilot showing his or her hands for verification. If in doubt of who has control of the aircraft, query the other pilot. IP input does not constitute a change of controls unless there is an ICS failure"
       },
       {
         "type": "action",
-        "text": "(2) Transfer of aircraft controls includes control of the FMS, UFCP and radios. The nonflying pilot may assist or assume control of the FMS, UFCP and radios as directed"
+        "text": "(2) Transfer of aircraft controls includes control of the FMS, UFCP and radios. The non-flying pilot may assist or assume control of the FMS, UFCP and radios as directed"
       },
       {
         "type": "condition",
@@ -94,7 +94,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "Either pilot recognizing the need to abort will call ‘ABORT, ABORT, ABORT’ over the ICS. The flying pilot will execute the ABORT procedure IAW NATOPS. If we anticipate departing the prepared surface, we will execute the EMERGENCY ENGINE SHUTDOWN ON THE GROUND procedure. The aircraft commander will call ‘CFS, CFS, CFS’ to command execution of the canopy fracturing system, or ‘EJECT, EJECT, EJECT’ to command ejection as required"
+        "text": "Either pilot recognizing the need to abort will call 'ABORT, ABORT, ABORT’ over the ICS. The flying pilot will execute the ABORT procedure IAW NATOPS. If we anticipate departing the prepared surface, we will execute the EMERGENCY ENGINE SHUTDOWN ON THE GROUND procedure. The aircraft commander will call 'CFS, CFS, CFS’ to command execution of the canopy fracturing system, or 'EJECT, EJECT, EJECT’ to command ejection as required"
       },
       {
         "type": "condition",
@@ -242,15 +242,15 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(1) All emergencies will be treated as actual unless prefaced with the word ‘SIMULATED’. While troubleshooting, we will ensure that one pilot is always flying the aircraft. No fast hands in the cockpit. We will apply the following three rules for all emergencies: 1) Maintain aircraft control. 2) Analyze the situation and take proper action. 3) Land as soon as conditions permit"
+        "text": "(1) All emergencies will be treated as actual unless prefaced with the word 'SIMULATED’. While troubleshooting, we will ensure that one pilot is always flying the aircraft. No fast hands in the cockpit. We will apply the following three rules for all emergencies: 1) Maintain aircraft control. 2) Analyze the situation and take proper action. 3) Land as soon as conditions permit"
       },
       {
         "type": "action",
-        "text": "(2) In the event of an actual malfunction, the pilot recognizing the malfunction will call it out over the ICS. The flying pilot will execute any applicable ‘critical action’ procedures. The non-flying pilot will break out the PCL and review both critical and non-critical action items, as well as all notes, warnings, and cautions. Time permitting, we will get dual concurrence prior to moving the PCL to OFF, pulling the firewall shut-off handle, or switching the PMU to OFF."
+        "text": "(2) In the event of an actual malfunction, the pilot recognizing the malfunction will call it out over the ICS. The flying pilot will execute any applicable 'critical action’ procedures. The non-flying pilot will break out the PCL and review both critical and non-critical action items, as well as all notes, warnings, and cautions. Time permitting, we will get dual concurrence prior to moving the PCL to OFF, pulling the firewall shut-off handle, or switching the PMU to OFF."
       },
         {
         "type": "action",
-        "text": "(3) In the event of a simulated power loss, the IP will initiate by stating, ‘I HAVE THE PCL, SIMULATED’, manipulate the PCL as required to simulate the power loss and set 4- 6 percent torque upon hearing the SNA/IUT verbalize ‘Simulated PCL–OFF.’ In all cases, the flying pilot retains control of the aircraft and may utilize power as necessary (4) For all simulated malfunctions, the SNA/IUT will maintain control of the aircraft and recite the appropriate procedure, moving the landing gear and flap handles as appropriate. Do not move any other switches or handles in a simulated scenario"
+        "text": "(3) In the event of a simulated power loss, the IP will initiate by stating, 'I HAVE THE PCL, SIMULATED’, manipulate the PCL as required to simulate the power loss and set 4- 6 percent torque upon hearing the SNA/IUT verbalize 'Simulated PCL–OFF.’ In all cases, the flying pilot retains control of the aircraft and may utilize power as necessary"
       },
         {
         "type": "action",
@@ -274,7 +274,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(a) To facilitate proper body position, the call for ejection will normally be a foursecond cadence: ‘EJECT, EJECT, EJECT,’ pull (both) the ejection handle. In the event of an ICS failure, execute three raps on the canopy, pull (both)."
+        "text": "(a) To facilitate proper body position, the call for ejection will normally be a four second cadence: 'EJECT, EJECT, EJECT,’ pull (both) the ejection handle. In the event of an ICS failure, execute three raps on the canopy, pull (both)."
       },
        {
         "type": "action",
