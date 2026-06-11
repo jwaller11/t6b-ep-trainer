@@ -257,13 +257,6 @@ export const procedures = [
       type: "noteGroup",
       bullets: [
         [
-          "Zoom results with an engine still producing a usable torque (>6%) will be several hundred to several thousand feet higher in altitude gained."
-        ],
-        [
-          "Each low altitude zoom capability chart depicted in Figure 3-2, Figure 3-3, and Figure 3-4 represents a no engine condition.",
-          "Each chart assumes the pilot will not perform any action prior to actual engine failure."
-        ],
-        [
           "If experiencing uncommanded power changes/loss of power/uncommanded propeller feather or compressor stalls, refer to appropriate procedure."
         ]
       ]
@@ -337,9 +330,6 @@ export const procedures = [
     {
       type: "warningGroup",
       bullets: [
-        [
-          "Consideration should be given to not attempting an airstart if on a minimum glide profile to an airfield, since repeated airstart attempts will result in excessive altitude loss."
-        ],
         [
           "Airstart attempts outside of the airstart envelope may be unsuccessful or result in engine overtemperature.",
           "Consideration should be given to ensure airstarts are attempted within the airstart envelope (125-200 KIAS for sea level to 15,000 feet, or 135-200 KIAS for 15,001 to 20,000 feet)."
@@ -965,6 +955,8 @@ export const procedures = [
           "Ejection is recommended if a suitable landing area is not available.",
           "If circumstances dictate an emergency landing and ejection is not possible or the ejection system malfunctions, the pilot may perform an ELP to an unprepared surface or ditch the aircraft.",
           "The aircraft structure can survive either type of forced landing; however, the risk of injury increases significantly due to crash loads and the complexity of ground or water egress.",
+        ],
+        [
           "Inducing yaw (side slipping) with a known engine/oil malfunction could result in impaired windshield visibility due to oil leakage spraying onto the windshield."
         ]
       ]
