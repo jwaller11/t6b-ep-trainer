@@ -19,9 +19,7 @@ export const procedures = [
         type: "noteGroup",
         bullets: [
           [
-            "If start is initiated with PCL in the OFF position, abort by reselecting AUTO/RESET on the STARTER switch.",
-            "If start is initiated with PCL out of the OFF position, but not past the IDLE gate, abort by placing the PCL to OFF or reselecting AUTO/RESET on the STARTER switch.",
-            "If the PCL is past the IDLE gate, abort by placing the PCL to OFF."
+            "If start is initiated with PCL in the OFF position, abort by reselecting AUTO/RESET on the STARTER switch. If start is initiated with PCL out of the OFF position, but not past the IDLE gate, abort by placing the PCL to OFF or reselecting AUTO/RESET on the STARTER switch. If the PCL is past the IDLE gate, abort by placing the PCL to OFF."
           ]
         ]
       }
