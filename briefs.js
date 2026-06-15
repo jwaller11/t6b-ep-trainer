@@ -198,7 +198,11 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(4) The rescue is complete. If we are not first on scene, we may offer assistance but will remain clear unless called upon"
+        "text": "(4) The rescue is complete."
+      },
+     {
+        "type": "action",
+        "text": "If we are not first on scene, we may offer assistance but will remain clear unless called upon"
       },
       {
         "type": "condition",
