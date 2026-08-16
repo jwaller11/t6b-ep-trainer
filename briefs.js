@@ -41,6 +41,14 @@ export const briefs = [
         "text": "If an IMC penetration is required, the non-flying pilot will call out all airspeed deviations greater than 10 knots, heading deviations greater than 10 degrees, angles of bank greater than 30 degrees, altitude deviations greater than 100', and if descent rate is greater than current altitude remaining (Minute to Live Rule). Either pilot must announce if they experience any vertigo or spatial disorientation"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Not applicable"
+      },
+      {
         "type": "condition",
         "text": "Approach/Missed Approach"
       },
@@ -53,6 +61,14 @@ export const briefs = [
         "text": "If an instrument approach is required, the IP (or SNA/IUT at the IP’s discretion) will fly the approach to be backed up by the SNA/IUT on all headings, altitudes, airspeeds, angles of bank, and rates of descent. The SNA/IUT will call the runway environment in sight with clock position and repeat the current landing clearance"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Prior to the DH/VDP/MDA/MAP, the SNA/IUT will remain heads down flying the instrument approach. For training purposes, the IP will announce whether or not the runway environment is in sight. If no instruction is given, assume the field is not in sight. If the runway environment is not in sight by the decision height (DH) or missed approach point (MAP), we will execute the assigned missed approach or climb-out."
+      },
+      {
         "type": "condition",
         "text": "G-Awareness Procedures"
       },
@@ -63,6 +79,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "We will conduct a G-Ex prior to conducting any maneuvers requiring greater than three Gs, and preface all maneuvers with 'Gs coming on, NOW, NOW, NOW.’ Either pilot experiencing gray-out conditions must immediately call 'Knock-it-Off’ over the ICS and a contact unusual attitude must be used to recover the aircraft. In the event either pilot experiences a GLOC, the training portion of the flight will be terminated, and the IP will recover the aircraft to a suitable airfield"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Not applicable"
       },
       {
         "type": "condition",
@@ -115,6 +139,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "We will be primarily VFR today using ground reference checkpoints for navigation. However, we will keep the appropriate working area or navigation route in the FMS for back-up"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "We will be primarily IFR today and use the VOR and FMS as appropriate for navigation."
       },
       {
         "type": "condition",
@@ -231,6 +263,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "(e) If unable to regain VMC, the IP will contact the nearest ATC facility and coordinate an IFR clearance. If swift contact cannot be made, Squawk 7700, declare an emergency, and use guard as appropriate"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Not applicable"
       },
       {
         "type": "condition",
@@ -351,6 +391,14 @@ export const briefs = [
         {
         "type": "action",
         "text": "(4) For all simulated malfunctions, the SNA/IUT will maintain control of the aircraft and recite the appropriate procedure, moving the landing gear and flap handles as appropriate. Do not move any other switches or handles in a simulated scenario"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "3-4 Not applicable"
       },
       {
         "type": "condition",
