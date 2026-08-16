@@ -8,7 +8,7 @@ const allContent = [...procedures, ...briefs];
 ================================= */
 
 function isBriefMode(mode) {
-  return mode === "fam" || mode === "inav" || mode === "form";
+  return mode === "fam" || mode === "form";
 }
 
 function splitBriefIntoPages(brief) {
@@ -316,11 +316,25 @@ function buildQueue(proc) {
       continue;
     }
 
-    if (step.type === "action" || step.type === "actionSub") {
-      pushAction(step.type, step.text);
+    if (step.type === "briefLabel") {
+      queue.push({
+        kind: "briefLabel",
+        text: step.text,
+        graded: false
+      });
       continue;
     }
 
+    // EP / brief actions.
+    if (step.type === "action" || step.type === "actionSub") {
+      // In NWC mode, do not display EP action boxes.
+      if (currentMode !== "nwc") {
+        pushAction(step.type, step.text);
+      }
+      continue;
+    }
+
+    // NWC groups appear only in NWC mode.
     if (currentMode === "nwc") {
       if (step.type === "noteGroup") pushNwcGroup("note", step.bullets);
       if (step.type === "warningGroup") pushNwcGroup("warning", step.bullets);
@@ -357,7 +371,7 @@ function render() {
   const title = document.createElement("h2");
 
   if (currentProcedure.parentTitle) {
-    title.textContent = `${currentProcedure.parentTitle} — ${currentProcedure.title}`;
+    title.textContent = currentProcedure.title;
   } else {
     title.textContent = currentProcedure.title;
   }
@@ -377,6 +391,14 @@ function render() {
       cond.className = "condition-label";
       cond.textContent = item.text;
       container.appendChild(cond);
+      continue;
+    }
+
+    if (item.kind === "briefLabel") {
+      const briefLabel = document.createElement("div");
+      briefLabel.className = "brief-label";
+      briefLabel.textContent = item.text;
+      container.appendChild(briefLabel);
       continue;
     }
 
@@ -409,7 +431,6 @@ function render() {
       // Brief modes use embedded numbering like (1), (a), etc.
       if (
         currentMode === "fam" ||
-        currentMode === "inav" ||
         currentMode === "form"
       ) {
 
@@ -435,7 +456,6 @@ function render() {
 
       if (
         currentMode === "fam" ||
-        currentMode === "inav" ||
         currentMode === "form"
       ) {
 
@@ -618,12 +638,6 @@ function bind() {
 
   document.getElementById("famMode")?.addEventListener("click", () => {
     currentMode = "fam";
-    currentProcedure = null;
-    render();
-  });
-
-  document.getElementById("inavMode")?.addEventListener("click", () => {
-    currentMode = "inav";
     currentProcedure = null;
     render();
   });
