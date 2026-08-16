@@ -573,15 +573,595 @@ export const briefs = [
   {
     "id": "forms_brief",
     "type": "form",
-    "title": "FORMS BRIEF",
+    "title": "FORM/CAPSTONE BRIEF",
     "steps": [
       {
-        "type": "action",
-        "text": "1. Paragraph one verbatim text here."
+        "type": "condition",
+        "text": "Airsickness"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
       },
       {
         "type": "action",
-        "text": "2. Paragraph two verbatim text here."
+        "text": "Standard"
+      },
+      {
+        "type": "condition",
+        "text": "FOD"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
+        "type": "condition",
+        "text": "Frequencies"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) All frequency changes will be auto-switch unless briefed. Lead will contact BOOMER/RANGER/RUFNEK Base to report the flight outbound. Lead will direct wing to switch base to get parking and report the flight complete."
+      },
+      {
+        "type": "action",
+        "text": "(2) Radio changes will generally be made one radio at a time, but dual swaps may be conducted at flight lead's discretion with a positive check-in over TAC."
+      },
+      {
+        "type": "action",
+        "text": "(3) If Wing is in doubt of which ATC frequency to switch to, we will utilize TAC to get well."
+      },
+      {
+        "type": "action",
+        "text": "(4) If radio traffic prohibits switch or if lost communications, frequency changes will be made via hand signals."
+      },
+      {
+        "type": "condition",
+        "text": "Visual Signals"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "All signals will be made in a clear, exaggerated manner, utilizing a predictable cadence."
+      },
+      {
+        "type": "condition",
+        "text": "Radio Procedures & Disc"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) Standard with the following additions."
+      },
+      {
+        "type": "action",
+        "text": "(2) Lead will primarily handle all radio calls but will be backed up by Wing."
+      },
+      {
+        "type": "action",
+        "text": "(3) If Lead is off frequency, Wing will respond to all radio calls and advise Lead over the TAC frequency as necessary."
+      },
+      {
+        "type": "condition",
+        "text": "Change of Contols"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
+        "type": "condition",
+        "text": "Lead Change"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "The flight will use a positive, two-way lead change via hand signal. If there is any doubt about which aircraft has the lead, the lead aircraft will identify itself over the radio using its TAC callsign number."
+      },
+      {
+        "type": "condition",
+        "text": "Navigational Aids"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
+        "type": "condition",
+        "text": "Identification"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) The Designated Flight Lead will be [IP listed as Section Lead (SL) on flight schedule]"
+      },
+      {
+        "type": "action",
+        "text": "(2) The Formation Lead will be (SNA/IUT leading the formation)."
+      },
+      {
+        "type": "action",
+        "text": "(3) Our ATC call sign will be BOOMER/RANGER/RUFNEK XXX (Designated Flight Lead's ACID), and we will check-in with each agency as 'BOOMER/RANGER/RUFNEK XXX, flight of two'. All subsequent calls on a frequency will be 'BOOMER/RANGER/RUFNEK XXX, flight'."
+      },
+      {
+        "type": "action",
+        "text": "(4) We will squawk Designated Flight Lead's ACID (55XX or 56XX) or as assigned. Lead will squawk active while Wing backs up the same code in STBY."
+      },
+      {
+        "type": "action",
+        "text": "(5) Our tactical call sign will be _______. All '99 (area check-in) calls will be made with '[Tactical call sign], flight of two' (as required)."
+      },
+      {
+        "type": "condition",
+        "text": "Clearing Procedures"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
+        "type": "condition",
+        "text": "Climb out"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) _______ Departure to the _______ Working Area. (brief different working area or IFR coded departure as applicable)"
+      },
+      {
+        "type": "action",
+        "text": "(2) We will utilize an interval takeoff with a five second delay."
+      },
+      {
+        "type": "action",
+        "text": "(3) Lead will position on the downwind side of the runway, with enough room for wing to get in position on the opposite side."
+      },
+      {
+        "type": "action",
+        "text": "(4) After takeoff, wing will join in parade position utilizing the running rendezvous or CV rendezvous procedures."
+      },
+      {
+        "type": "action",
+        "text": "(5) When a CV rendezvous is utilized, wing will join on the outside of the turn. In the case when lead rolls out, exercise once a CV always a CV."
+      },
+      {
+        "type": "condition",
+        "text": "Mission Planning, Including Fuel Management"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "We will update joker as required when entering the working area. When communicating fuel state, we will round down to the nearest 10 pounds. An ops check will be conducted prior to entering and exiting the working area, as well as after any lead changes."
+      },
+      {
+        "type": "condition",
+        "text": "IMC penetration"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "Will be flown by the IP and backed up by the SNA/IUT."
+      },
+      {
+        "type": "condition",
+        "text": "Approach/Missed Approach"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) If unable to recover VFR, a section instrument approach, or individual instrument approaches will be flown at the Designated Flight Leads discretion."
+      },
+      {
+        "type": "action",
+        "text": "(2) To fly a section approach, weather must be at or above circling minimums, or 1000/3 if no circling minimums are published. If a section instrument approach is flown, Lead must ensure wing remains in the Parade position for all IMC penetrations. If individual instrument approaches are flown, lead will coordinate separate squawks for the flight and ensure the aircraft with the lower fuel state exits the area first."
+      },
+      {
+        "type": "action",
+        "text": "(3) Execute the section missed approach IAW the FTI"
+      },
+      {
+        "type": "condition",
+        "text": "Ground Ops"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) Both aircraft will tune TAC VHF and check-in when ready to close canopy for start. Advise the other aircraft of any pre-flight issues in your aircraft or those noticed on the other aircraft."
+      },
+      {
+        "type": "action",
+        "text": "(2) Wing will taxi in the trail position, at one plane length."
+      },
+      {
+        "type": "condition",
+        "text": "Terminate"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) Used to cease maneuvering for a non-safety related situation, such as when the desired learning objectives have been met."
+      },
+      {
+        "type": "action",
+        "text": "(2) The call is made by lead or recommended by wing."
+      },
+      {
+        "type": "action",
+        "text": "(3) Lead will then maneuver in a predictable manner to a safe flying attitude."
+      },
+      {
+        "type": "condition",
+        "text": "Knock it Off"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) Used when safety of flight is an issue, such as an emergency, a traffic threat, a crewmember has G-locked, or an impending boundary bust. Lead will direct a flow heading and altitude deconfliction."
+      },
+      {
+        "type": "action",
+        "text": "(2) Any pilot can initiate and must state the reason if able."
+      },
+      {
+        "type": "action",
+        "text": "(3) Lead will then maneuver in a predictable manner to a safe flying attitude and give their heading and altitude."
+      },
+      {
+        "type": "condition",
+        "text": "Resets"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "Bearing line resets must be conducted at the discretion of the IP"
+      },
+      {
+        "type": "condition",
+        "text": "G-Awareness Procedures"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "We will conduct a G-ex prior to tail chase."
+      },
+      {
+        "type": "condition",
+        "text": "Aborts"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) Sympathetic aborts apply for an Interval Takeoff."
+      },
+      {
+        "type": "action",
+        "text": "(2) Both aircraft will maintain their side of the runway during the aborted takeoff."
+      },
+      {
+        "type": "action",
+        "text": "(3) Either lead or wing can abort the entire flight by transmitting, [Tactical call sign] flight, abort on tower frequency."
+      },
+      {
+        "type": "action",
+        "text": "(4) If lead aborts during an interval takeoff, they will abort the entire flight by calling [Tactical call sign] flight, abort on tower frequency and wing will abort behind them."
+      },
+      {
+        "type": "action",
+        "text": "(5) If wing aborts during an interval takeoff, they will wait to transmit until lead is safely airborne and then transmit BOOMER/RANGER/RUFNEK XXX, abort on tower frequency and lead will coordinate with tower to return for a full stop."
+      },
+      {
+        "type": "action",
+        "text": "(6) Sympathetic aborts do not apply for a Section Takeoff."
+      },
+      {
+        "type": "action",
+        "text": "(7) If either aircraft aborts during a section takeoff, they will wait until the other aircraft is safely airborne and then call BOOMER/RANGER/RUFNEK XXX, abort on tower frequency. The other aircraft will coordinate with tower to return for a full stop."
+      },
+      {
+        "type": "condition",
+        "text": "Divert Fields"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "Primary weather diverts will be in accordance with the SOP."
+      },
+      {
+        "type": "condition",
+        "text": "Min & Emergency Fuel"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
+        "type": "condition",
+        "text": "Loss of Power"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
+        "type": "condition",
+        "text": "Radio Failure/ICS"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) In the event of a radio or ICS failure, gain the attention of the other aircraft and pass the appropriate signal for down transmitter, down receiver, or both."
+      },
+      {
+        "type": "action",
+        "text": "(2) We will conduct a lead change, if required, to place the NORDO (No Radio) aircraft in lead. If radio communications cant be established, the good aircraft will be placed in formation lead and inform approach and tower that wing is NORDO."
+      },
+      {
+        "type": "action",
+        "text": "(3) If inside the VFR entry point (Shamrock) or the initial if out of the local area, a lead change will not be conducted. The NORDO aircraft will pass the appropriate signal to the good aircraft. The good aircraft will handle communications, inform tower that the other is NORDO, and request Aldis Lamp signals. If lead is NORDO, wing will request that Tower call the break, and Lead will look to Wing for the kiss-off signal."
+      },
+      {
+        "type": "condition",
+        "text": "Unintentional Instrument Flight"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) In the event the flight unintentionally encounters IMC, lead will transition to an instrument scan and wing will maintain parade position. Execute the Unintentional Instrument Flight procedure IAW the Contact FTI."
+      },
+      {
+        "type": "action",
+        "text": "(2) If unable to regain VMC, lead will contact ATC for an IFR clearance."
+      },
+      {
+        "type": "action",
+        "text": "(3) If wing loses sight of lead, wing will execute lost sight procedures."
+      },
+      {
+        "type": "condition",
+        "text": "Lost Sight(IMC)"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) If wing loses sight of lead in IMC, wing will transition to an instrument scan while smoothly reducing power by approximately 10%. Wing will then call [Tactical call sign] one-two, lost sight, heading ____. Lead will provide heading, altitude, and attitude as necessary, and the appropriate procedure will be executed:"
+      },
+      {
+        "type": "action",
+        "text": "(2) If straight and level, wing will smoothly turn away from lead for a 30-degree heading change, time for 30 seconds, then turn to parallel leads heading. Lead will transmit heading and altitude."
+      },
+      {
+        "type": "action",
+        "text": "(3) If in a turn, the outside aircraft will roll wings level and transmit heading and altitude. The inside aircraft will continue to the assigned heading (at least 30 degrees from lost sight heading). After 30 seconds, the outside aircraft will turn to the assigned heading."
+      },
+      {
+        "type": "action",
+        "text": "(4) If in a climb, wing will level off, state altitude, and execute the applicable lost sight procedure (straight and level or turn). Lead will continue climbing to the assigned altitude (not less than 500 feet above the lost sight altitude) and state heading and altitude."
+      },
+      {
+        "type": "action",
+        "text": "(5) In a descent, wing will level off, state altitude, and execute applicable lost sight procedure (straight and level or turn). Lead will continue descending to the assigned altitude, ensure 500 feet of separation (directing a climb or descent for Wing as required) and state heading and altitude."
+      },
+      {
+        "type": "action",
+        "text": "(6) In all above cases, lead will coordinate separate squawks and approaches with ATC unless we encounter VMC, in which case lead will direct a rejoin using VMC blind procedures."
+      },
+      {
+        "type": "action",
+        "text": "(7) If on an instrument approach and inside the final approach fix, wing will turn away from lead and climb to Final Approach Fix altitude and proceed to the Missed Approach Point, perform missed approach procedures, and coordinate with ATC for a separate clearance. Lead will inform ATC and continue with the approach."
+      },
+      {
+        "type": "condition",
+        "text": "Blind (VMC)"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) If wing loses visual contact in VMC, they will call [Tactical call sign], Blind and state altitude. If lead is visual, they will direct wings eyes towards leads position referencing a clock position (high/level/low) from wing."
+      },
+      {
+        "type": "action",
+        "text": "(2) After each successive call from lead, wing will continue to call either blind or visual. After wing calls visual, lead will be directive to either conduct a rendezvous or continue training."
+      },
+      {
+        "type": "action",
+        "text": "(3) If both aircraft are blind, lead will be directive and descriptive in transmitting altitude, while maneuvering predictably to ensure a minimum of 500 feet of altitude separation, without flying through wings altitude. Wing will lag leads last known position and clear their flightpath. Lead will determine a rendezvous point and establish a 30-degree AOB turn at 200 KIAS specifying turn direction. When wing is visual, they will transmit [Tactical call sign], Visual, and lead will direct a rejoin."
+      },
+      {
+        "type": "action",
+        "text": "(4) If either aircraft is NORDO, rendezvous at [pre-briefed point/radial DME] on a [prebriefed entry heading/radial intercept], maintaining at least 500 of altitude separation. The low aircraft will stay low, and the high aircraft will stay high. Wing will only commence rejoin once lead is observed established in the appropriate orbit and will rejoin co-altitude on the appropriate bearing line using normal rendezvous procedures."
+      },
+      {
+        "type": "condition",
+        "text": "Downed Pilot & AC"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "The Designated Flight Lead will direct on scene commander duties."
+      },
+      {
+        "type": "condition",
+        "text": "Mid-Air/Airborne Damaged Aircraft/ Bird Strike"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) Our first priority in all cases will be to maintain aircraft control. If we are unable to control the aircraft, we will ensure safe separation and eject."
+      },
+      {
+        "type": "action",
+        "text": "(2) If a single aircraft is damaged, that aircraft will communicate if able, climb to a safe altitude, assume lead as necessary, and assess damage. The good aircraft will assume the perch position and assist as necessary."
+      },
+      {
+        "type": "action",
+        "text": "(3) If severe damage occurs or both aircraft are affected, both aircraft must communicate, separate, maintain visual contact, and NOT rejoin as a flight. After separation is ensured and appropriate emergency checklists are complete, a game plan will be developed to get both aircraft safely on deck."
+      },
+      {
+        "type": "condition",
+        "text": "OBOGS"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "STANDARD"
+      },
+      {
+        "type": "condition",
+        "text": "Unsafe Gear"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "The aircraft with the unsafe indication must notify the other aircraft, assume lead as necessary, notify ATC, and climb to an emergency orbit or delta pattern (at least 2000 feet AGL)."
+      },
+      {
+        "type": "condition",
+        "text": "OCF"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) If we are in Out-of-Controlled Flight, we will execute the INADVERTENT DEPARTURE FROM CONTROLLED FLIGHT Emergency Procedure; PCL IDLE, controls neutral, altitude check, recover from unusual altitude."
+      },
+      {
+        "type": "action",
+        "text": "(2) OCF can be identified if the aircraft does not respond immediately and in a normal sense to application of flight controls. Airspeed in a steady-state spin will either be stable or it will oscillate above and below a constant airspeed, while the turn needle will be relied upon to indicate direction of rotation."
+      },
+      {
+        "type": "condition",
+        "text": "Other AC Emergencies/ Simulated Emergencies"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) The aircraft with the malfunction will assume the lead and direct the good aircraft to the support position. The Bleeder is the Leader. The support aircraft will match the emergency aircrafts configuration and detach when directed, no later than 300 AGL."
+      },
+      {
+        "type": "action",
+        "text": "(2) Leads priorities will be Aviate, Communicate, Separate."
+      },
+      {
+        "type": "action",
+        "text": "(3) Wings priorities will be Aviate, Separate, Communicate."
+      },
+      {
+        "type": "condition",
+        "text": "Ejection"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FORM/CAPSTONE"
+      },
+      {
+        "type": "action",
+        "text": "(1) Immediate, time critical, and deliberate ejection is standard."
+      },
+      {
+        "type": "action",
+        "text": "(2) The good aircraft will look for two good chutes, act as on-scene commander, and at no time will we overfly or under-fly chutes."
       }
     ]
   }
