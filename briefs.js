@@ -9,12 +9,20 @@ export const briefs = [
         "text": "Airsickness History"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "Aircrew must announce if they become passively or actively airsick and may pass the controls as the situation dictates. The flying pilot will keep the aircraft in a stable position, minimizing turns as the situation allows. If the airsick pilot feels he or she cannot continue, the mission will be aborted for airsickness"
       },
       {
         "type": "condition",
         "text": "Foreign Object Damage"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -25,12 +33,20 @@ export const briefs = [
         "text": "IMC Penetration"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "If an IMC penetration is required, the non-flying pilot will call out all airspeed deviations greater than 10 knots, heading deviations greater than 10 degrees, angles of bank greater than 30 degrees, altitude deviations greater than 100', and if descent rate is greater than current altitude remaining (Minute to Live Rule). Either pilot must announce if they experience any vertigo or spatial disorientation"
       },
       {
         "type": "condition",
         "text": "Approach/Missed Approach"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -41,12 +57,20 @@ export const briefs = [
         "text": "G-Awareness Procedures"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "We will conduct a G-Ex prior to conducting any maneuvers requiring greater than three Gs, and preface all maneuvers with 'Gs coming on, NOW, NOW, NOW.’ Either pilot experiencing gray-out conditions must immediately call 'Knock-it-Off’ over the ICS and a contact unusual attitude must be used to recover the aircraft. In the event either pilot experiences a GLOC, the training portion of the flight will be terminated, and the IP will recover the aircraft to a suitable airfield"
       },
       {
         "type": "condition",
         "text": "Frequencies:"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -57,12 +81,20 @@ export const briefs = [
         "text": "Radio Procedures and Discipline:"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "The flying pilot will make all radio calls to be backed up by the non-flying pilot. Either pilot can make a safety of flight call. Keep all calls concise and professional"
       },
       {
         "type": "condition",
         "text": "Change of Control of Aircraft"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -77,12 +109,20 @@ export const briefs = [
         "text": "Navigational Aids"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "We will be primarily VFR today using ground reference checkpoints for navigation. However, we will keep the appropriate working area or navigation route in the FMS for back-up"
       },
       {
         "type": "condition",
         "text": "Clearing Procedures"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -93,12 +133,20 @@ export const briefs = [
         "text": "Aborts"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "Either pilot recognizing the need to abort will call 'ABORT, ABORT, ABORT’ over the ICS. The flying pilot will execute the ABORT procedure IAW NATOPS. If we anticipate departing the prepared surface, we will execute the EMERGENCY ENGINE SHUTDOWN ON THE GROUND procedure. The aircraft commander will call 'CFS, CFS, CFS’ to command execution of the canopy fracturing system, or 'EJECT, EJECT, EJECT’ to command ejection as required"
       },
       {
         "type": "condition",
         "text": "Divert Fields"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -109,12 +157,20 @@ export const briefs = [
         "text": "Minimum And Emergency Fuel"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "We will declare MIN FUEL if we anticipate landing below 200 pounds and EMERGENCY FUEL if we anticipate landing below 120 pounds"
       },
       {
         "type": "condition",
         "text": "Loss Of Power"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -127,6 +183,10 @@ export const briefs = [
       {
         "type": "condition",
         "text": "Radio Failure/ICS Failure"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -143,6 +203,10 @@ export const briefs = [
       {
         "type": "condition",
         "text": "Unintentional Instrument Flight"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -173,12 +237,20 @@ export const briefs = [
         "text": "Loss Of Sight/Lost Wingman"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "We will be single ship today"
       },
       {
         "type": "condition",
         "text": "Downed Pilot and Aircraft"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -209,12 +281,20 @@ export const briefs = [
         "text": "Mid-Air/Airborne Damaged Aircraft/Bird Strike"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "Our first priority will be to maintain aircraft control. If we are unable to control the aircraft, we will eject. If the aircraft is controllable and we suspect possible engine damage (i.e. within the prop arc), we will execute a PEL to the nearest suitable airfield. If no engine damage is suspected, we will execute a Controllability Check as required."
       },
       {
         "type": "condition",
         "text": "OBOGS Malfunctions/Hypoxia Symptoms"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -225,12 +305,20 @@ export const briefs = [
         "text": "Unsafe Gear"
       },
       {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
+      },
+      {
         "type": "action",
         "text": "If on departure or recovery, the flying pilot will request entry into the Delta pattern and have tower or RDO inspect the gear while troubleshooting. If a form qualified pilot is in the area, we will coordinate a join up in the Delta pattern to conduct a visual gear inspection"
       },
       {
         "type": "condition",
         "text": "OCF and Spin Recognition and Recovery"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -243,6 +331,10 @@ export const briefs = [
       {
         "type": "condition",
         "text": "Other Aircraft Emergencies/Simulated Emergencies"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -263,6 +355,10 @@ export const briefs = [
       {
         "type": "condition",
         "text": "Ejection"
+      },
+      {
+        "type": "briefLabel",
+        "text": "FAM/VNAV"
       },
       {
         "type": "action",
@@ -287,21 +383,6 @@ export const briefs = [
       {
         "type": "action",
         "text": "(4) Deliberate. Time permitting, we will execute as many of the CONTROLLED EJECTION checklist steps as possible. The Controlled Ejection Area is defined as the CRP 170 radial at 20 DME (Chapman Ranch) heading 210"
-      }
-    ]
-  },
-  {
-    "id": "inav_brief",
-    "type": "inav",
-    "title": "INAV BRIEF",
-    "steps": [
-      {
-        "type": "action",
-        "text": "1. Paragraph one verbatim text here."
-      },
-      {
-        "type": "action",
-        "text": "2. Paragraph two verbatim text here."
       }
     ]
   },
