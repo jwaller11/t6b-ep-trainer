@@ -17,6 +17,14 @@ export const briefs = [
         "text": "Aircrew must announce if they become passively or actively airsick and may pass the controls as the situation dictates. The flying pilot will keep the aircraft in a stable position, minimizing turns as the situation allows. If the airsick pilot feels he or she cannot continue, the mission will be aborted for airsickness"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
         "type": "condition",
         "text": "Foreign Object Damage"
       },
@@ -27,6 +35,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "Ensure only those items required for flight are taken to the aircraft, and that all flight suit pockets are zippered. Both pilots will inspect BOTH cockpits before and after flight to ensure no FOD is present"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
       },
       {
         "type": "condition",
@@ -101,6 +117,14 @@ export const briefs = [
         "text": "We will use preset UHF, VHF, and NAV frequencies, and manual frequencies as required"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
         "type": "condition",
         "text": "Radio Procedures and Discipline:"
       },
@@ -111,6 +135,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "The flying pilot will make all radio calls to be backed up by the non-flying pilot. Either pilot can make a safety of flight call. Keep all calls concise and professional"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
       },
       {
         "type": "condition",
@@ -127,6 +159,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "(2) Transfer of aircraft controls includes control of the FMS, UFCP and radios. The non-flying pilot may assist or assume control of the FMS, UFCP and radios as directed"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
       },
       {
         "type": "condition",
@@ -161,6 +201,14 @@ export const briefs = [
         "text": "Both pilots will maintain a vigilant lookout for other traffic using the TCAS and ADS-B to aid as appropriate. Call out all traffic using the clock system, high/level/low, factor/no factor, call a bird a bird, and plane a plane. Any pilot recognizing an immediate traffic conflict will maneuver the aircraft into a safe position and discuss traffic avoidance after it is no longer a factor"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
         "type": "condition",
         "text": "Aborts"
       },
@@ -171,6 +219,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "Either pilot recognizing the need to abort will call 'ABORT, ABORT, ABORT’ over the ICS. The flying pilot will execute the ABORT procedure IAW NATOPS. If we anticipate departing the prepared surface, we will execute the EMERGENCY ENGINE SHUTDOWN ON THE GROUND procedure. The aircraft commander will call 'CFS, CFS, CFS’ to command execution of the canopy fracturing system, or 'EJECT, EJECT, EJECT’ to command ejection as required"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
       },
       {
         "type": "condition",
@@ -185,6 +241,14 @@ export const briefs = [
         "text": "Our primary weather diverts in the local area will be Corpus Christi International (KCRP) and Victoria Regional (KVCT)"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
         "type": "condition",
         "text": "Minimum And Emergency Fuel"
       },
@@ -195,6 +259,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "We will declare MIN FUEL if we anticipate landing below 200 pounds and EMERGENCY FUEL if we anticipate landing below 120 pounds"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
       },
       {
         "type": "condition",
@@ -211,6 +283,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "(2) If we have an engine failure elsewhere, we will execute the ENGINE FAILURE DURING FLIGHT emergency procedure. If we are unable to intercept an ELP for a suitable landing site, we will eject"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
       },
       {
         "type": "condition",
@@ -231,6 +311,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "(3) If we have an ICS failure, we can remove our masks momentarily and shout or use frequencies 123.45 or 246.8 to communicate as necessary. If ICS cannot be restored, the instructional portion of the flight will be terminated, and we will land as soon as practical"
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
       },
       {
         "type": "condition",
@@ -285,6 +373,14 @@ export const briefs = [
         "text": "We will be single ship today"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
         "type": "condition",
         "text": "Downed Pilot and Aircraft"
       },
@@ -317,6 +413,14 @@ export const briefs = [
         "text": "If we are not first on scene, we may offer assistance but will remain clear unless called upon"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
         "type": "condition",
         "text": "Mid-Air/Airborne Damaged Aircraft/Bird Strike"
       },
@@ -327,6 +431,14 @@ export const briefs = [
       {
         "type": "action",
         "text": "Our first priority will be to maintain aircraft control. If we are unable to control the aircraft, we will eject. If the aircraft is controllable and we suspect possible engine damage (i.e. within the prop arc), we will execute a PEL to the nearest suitable airfield. If no engine damage is suspected, we will execute a Controllability Check as required."
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
       },
       {
         "type": "condition",
@@ -341,6 +453,14 @@ export const briefs = [
         "text": "If either member of the crew experiences hypoxic symptoms, or hypoxia is suspected for any reason, both crew members must execute the OBOGS FAILURE/PHYSIOLOGICAL SYMPTOMS procedure"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
         "type": "condition",
         "text": "Unsafe Gear"
       },
@@ -353,12 +473,20 @@ export const briefs = [
         "text": "If on departure or recovery, the flying pilot will request entry into the Delta pattern and have tower or RDO inspect the gear while troubleshooting. If a form qualified pilot is in the area, we will coordinate a join up in the Delta pattern to conduct a visual gear inspection"
       },
       {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
+      {
         "type": "condition",
         "text": "OCF and Spin Recognition and Recovery"
       },
       {
         "type": "briefLabel",
-        "text": "FAM/VNAV"
+        "text": "FAM/VNAV/INAV"
       },
       {
         "type": "action",
@@ -398,7 +526,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "3-4 Not applicable"
+        "text": "#3-4 Not applicable"
       },
       {
         "type": "condition",
@@ -431,7 +559,15 @@ export const briefs = [
       {
         "type": "action",
         "text": "(4) Deliberate. Time permitting, we will execute as many of the CONTROLLED EJECTION checklist steps as possible. The Controlled Ejection Area is defined as the CRP 170 radial at 20 DME (Chapman Ranch) heading 210"
-      }
+      },
+      {
+        "type": "briefLabel",
+        "text": "INAV"
+      },
+      {
+        "type": "action",
+        "text": "Standard"
+      },
     ]
   },
   {
