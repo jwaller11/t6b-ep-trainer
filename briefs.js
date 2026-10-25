@@ -645,18 +645,6 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "Navigational Aids"
-      },
-      {
-        "type": "briefLabel",
-        "text": "FORM/CAPSTONE"
-      },
-      {
-        "type": "action",
-        "text": "Standard"
-      },
-      {
-        "type": "condition",
         "text": "Identification"
       },
       {
