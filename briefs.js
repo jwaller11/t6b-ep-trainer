@@ -577,30 +577,6 @@ export const briefs = [
     "steps": [
       {
         "type": "condition",
-        "text": "Airsickness"
-      },
-      {
-        "type": "briefLabel",
-        "text": "FORM/CAPSTONE"
-      },
-      {
-        "type": "action",
-        "text": "Standard"
-      },
-      {
-        "type": "condition",
-        "text": "FOD"
-      },
-      {
-        "type": "briefLabel",
-        "text": "FORM/CAPSTONE"
-      },
-      {
-        "type": "action",
-        "text": "Standard"
-      },
-      {
-        "type": "condition",
         "text": "Frequencies"
       },
       {
@@ -609,7 +585,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(1) All frequency changes will be auto-switch unless briefed. Lead will contact BOOMER/RANGER/RUFNEK Base to report the flight outbound. Lead will direct wing to switch base to get parking and report the flight complete."
+        "text": "(1) All frequency changes will be auto-switch unless briefed. Lead will contact RANGER Base to report the flight outbound. Lead will direct wing to switch base to get parking and report the flight complete."
       },
       {
         "type": "action",
@@ -657,18 +633,6 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "Change of Contols"
-      },
-      {
-        "type": "briefLabel",
-        "text": "FORM/CAPSTONE"
-      },
-      {
-        "type": "action",
-        "text": "Standard"
-      },
-      {
-        "type": "condition",
         "text": "Lead Change"
       },
       {
@@ -709,7 +673,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(3) Our ATC call sign will be BOOMER/RANGER/RUFNEK XXX (Designated Flight Lead's ACID), and we will check-in with each agency as 'BOOMER/RANGER/RUFNEK XXX, flight of two'. All subsequent calls on a frequency will be 'BOOMER/RANGER/RUFNEK XXX, flight'."
+        "text": "(3) Our ATC call sign will be RANGER XXX (Designated Flight Lead's ACID), and we will check-in with each agency as 'RANGER XXX, flight of two'. All subsequent calls on a frequency will be 'RANGER XXX, flight'."
       },
       {
         "type": "action",
@@ -721,18 +685,6 @@ export const briefs = [
       },
       {
         "type": "condition",
-        "text": "Clearing Procedures"
-      },
-      {
-        "type": "briefLabel",
-        "text": "FORM/CAPSTONE"
-      },
-      {
-        "type": "action",
-        "text": "Standard"
-      },
-      {
-        "type": "condition",
         "text": "Climb out"
       },
       {
@@ -741,7 +693,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(1) _______ Departure to the _______ Working Area. (brief different working area or IFR coded departure as applicable)"
+        "text": "(1) _______ Departure to the _______ Working Area."
       },
       {
         "type": "action",
@@ -781,7 +733,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "Will be flown by the IP and backed up by the SNA/IUT."
+        "text": "Will be flown by the IP and backed up by the SNA"
       },
       {
         "type": "condition",
@@ -909,7 +861,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(5) If wing aborts during an interval takeoff, they will wait to transmit until lead is safely airborne and then transmit BOOMER/RANGER/RUFNEK XXX, abort on tower frequency and lead will coordinate with tower to return for a full stop."
+        "text": "(5) If wing aborts during an interval takeoff, they will wait to transmit until lead is safely airborne and then transmit RANGER XXX, abort on tower frequency and lead will coordinate with tower to return for a full stop."
       },
       {
         "type": "action",
@@ -917,7 +869,7 @@ export const briefs = [
       },
       {
         "type": "action",
-        "text": "(7) If either aircraft aborts during a section takeoff, they will wait until the other aircraft is safely airborne and then call BOOMER/RANGER/RUFNEK XXX, abort on tower frequency. The other aircraft will coordinate with tower to return for a full stop."
+        "text": "(7) If either aircraft aborts during a section takeoff, they will wait until the other aircraft is safely airborne and then call RANGER XXX, abort on tower frequency. The other aircraft will coordinate with tower to return for a full stop."
       },
       {
         "type": "condition",
@@ -930,30 +882,6 @@ export const briefs = [
       {
         "type": "action",
         "text": "Primary weather diverts will be in accordance with the SOP."
-      },
-      {
-        "type": "condition",
-        "text": "Min & Emergency Fuel"
-      },
-      {
-        "type": "briefLabel",
-        "text": "FORM/CAPSTONE"
-      },
-      {
-        "type": "action",
-        "text": "Standard"
-      },
-      {
-        "type": "condition",
-        "text": "Loss of Power"
-      },
-      {
-        "type": "briefLabel",
-        "text": "FORM/CAPSTONE"
-      },
-      {
-        "type": "action",
-        "text": "Standard"
       },
       {
         "type": "condition",
@@ -1086,18 +1014,6 @@ export const briefs = [
       {
         "type": "action",
         "text": "(3) If severe damage occurs or both aircraft are affected, both aircraft must communicate, separate, maintain visual contact, and NOT rejoin as a flight. After separation is ensured and appropriate emergency checklists are complete, a game plan will be developed to get both aircraft safely on deck."
-      },
-      {
-        "type": "condition",
-        "text": "OBOGS"
-      },
-      {
-        "type": "briefLabel",
-        "text": "FORM/CAPSTONE"
-      },
-      {
-        "type": "action",
-        "text": "STANDARD"
       },
       {
         "type": "condition",
